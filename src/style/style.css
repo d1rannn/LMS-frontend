@@ -1,0 +1,196 @@
+/* ------------------ Navbar Styles ------------------ */
+
+/* Remove default list styling */
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+/* Style for individual list items */
+nav ul li {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+/* Remove margin from the last item */
+nav ul li:last-child {
+    margin-right: 0;
+}
+
+/* Styling for the links */
+nav ul li a {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+/* Hover effect for links */
+nav ul li a:hover {
+    color: #0056b3;
+}
+
+/* Styling for the Logout button */
+nav ul li button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    vertical-align: middle;
+}
+
+/* Hover effect for button */
+nav ul li button:hover {
+    background-color: #0056b3;
+}
+
+/* ------------------ Register / Form Styles ------------------ */
+
+/* General form container style */
+.form-container {
+    max-width: 350px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+/* Title style */
+.form-container h2,
+.form-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Form input field styles */
+.form-container input {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+/* Focus effect for input fields */
+.form-container input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Submit button style */
+.form-container button {
+    width: 87%;
+    padding: 10px;
+    font-size: 1.2rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+/* Button hover effect */
+.form-container button:hover {
+    background-color: #0056b3;
+}
+
+/* ------------------ Home Page Styles ------------------ */
+
+.home-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f9fa;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.display-4 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.lead {
+    font-size: 1.25rem;
+    color: #6c757d;
+    margin-bottom: 2rem;
+}
+
+.btn-lg {
+    padding: 12px 25px;
+    font-size: 1.1rem;
+}
+
+/* ------------------ Course List Styles ------------------ */
+
+/* Основной контейнер для списка курсов */
+.course-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Стиль карточки курса */
+.course-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+/* При наведении карточка слегка увеличивается */
+.course-card:hover {
+    transform: scale(1.05);
+}
+
+/* Заголовок курса */
+.course-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Описание курса */
+.course-description {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Кнопка для записи на курс */
+.course-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.course-button:hover {
+    background-color: #45a049;
+}
