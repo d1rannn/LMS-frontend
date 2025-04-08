@@ -1,70 +1,46 @@
-# Getting Started with Create React App
+# New version of repo. Please, just discover, not copy. Thanks ˶ᵔ ᵕ ᵔ˶
+Old version is dead. Because of me. (Hate git in vscode now)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## To-Do: (General)
 
-In the project directory, you can run:
+1. Finish implementation of authorization and authentification (Done✅) 
+2. Roles: (User, Student, Teacher, Moderator, Admin)
 
-### `npm start`
+   2.1. User - Can Login and Register in Site. Can view catalog of courses.
+   2.2. Student - This is role when user buys a course. Can see more information of course
+   2.3. Teacher - Can Update information of teaching course.
+   2.4. Moderator - Can users make Student. Can add, create, edit and delete courses and students
+   2.5. Admin - Can do all things what can moderator do and can edit moderators
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+4. Implement all of each CRUD operations in the project (for example creating and updating products, reading(showing) orders, deleting users)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+--------------------
 
-### `npm test`
+### To-Do: (Daniar)
+1. Finish implementation of authorization and authentification (Done✅)
+   
+2. Roles (User, Student, Teacher)
+   
+   2.1. User - Can Login and Register in Site. Can view catalog of courses.
+   2.2. Student - This is role when user buys a course. Can see more information of course.
+   2.3. Teacher - Can do All CRUD operations with teaching course.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+4. CRUD
+   3.1. User - (Read) See all available courses
+   3.2. Student - (Read) See Course information
+   3.3. Teacher - (Update) Teaching Course
 
-### `npm run build`
+--------------------
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### To-Do: (Aibol)
+1. Roles (User, Student)
+   
+   1.1. Moderator - Can users make Student. Can add, create, edit and delete courses and students
+   1.2. Admin - Can do all things what can moderator do and can edit moderators
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. CRUD
+   2.1. Moderator - (Create) Create new courses
+   2.2. Moderator - (Update) Update courses
+   2.3. Admin - (Create, Read, Update, Delete) Can do all things what can moderator do and can edit moderators, Can see all students, course, teacher information
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
