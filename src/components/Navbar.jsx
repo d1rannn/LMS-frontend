@@ -10,16 +10,29 @@ function Navbar() {
         <nav>
             <ul>
                 <li><Link to="/">Home</Link></li>
-                <li><Link to="/register">Register</Link></li>
-                <li><Link to="/login">Login</Link></li>
-                {
-                    user ? (
-                        <>
-                            <li><Link to="/courses">Courses</Link></li>
-                            <li><button onClick={logout} className="button">Logout</button></li>
-                        </>
-                    ) : null
-                }
+
+                {user ? (
+                    <>
+                        {user.role !== "teacher" && <li><Link to="/courses">Courses</Link></li>}
+
+                        {user.role === "student" && (
+                            <li><Link to="/my-courses">My Courses</Link></li>
+                        )}
+
+                        {user.role === "teacher" && (
+                            <li><Link to="/my-teaching-courses">My Teaching Courses</Link></li>
+                        )}
+
+                        <li>
+                            <button onClick={logout} className="button">Logout</button>
+                        </li>
+                    </>
+                ) : (
+                    <>
+                        <li><Link to="/register">Register</Link></li>
+                        <li><Link to="/login">Login</Link></li>
+                    </>
+                )}
             </ul>
         </nav>
     );

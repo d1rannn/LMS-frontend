@@ -28,7 +28,6 @@ const Register = () => {
             // Save the hashed password
             password: hashedPassword,
             role: 'user', // Default role for new users
-            registredCourses: [] // Initialize with an empty array
         };
 
         if (formData.username !== formData.username.toLowerCase().trim()) {

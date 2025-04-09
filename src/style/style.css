@@ -140,57 +140,122 @@ nav ul li button:hover {
 
 /* ------------------ Course List Styles ------------------ */
 
-/* Основной контейнер для списка курсов */
+/* Контейнер со всеми карточками */
 .course-list {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
-    justify-content: center;
     padding: 20px;
 }
 
-/* Стиль карточки курса */
+/* Одна карточка курса */
 .course-card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
     padding: 20px;
-    width: 250px;
-    text-align: center;
-    transition: transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* При наведении карточка слегка увеличивается */
 .course-card:hover {
-    transform: scale(1.05);
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* Заголовок курса */
-.course-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #333;
+.course-card h3 {
+    font-size: 20px;
     margin-bottom: 10px;
+    color: #333;
 }
 
 /* Описание курса */
-.course-description {
-    font-size: 1rem;
+.course-card p {
+    font-size: 16px;
     color: #666;
+}
+
+.course-card button {
+    width: 18%;
+    padding: 10px;
+    font-size: 1.2rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+/* ------------------ Edit Course Styles ------------------ */
+
+/* Стили для страницы редактирования курса */
+.edit-course {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.edit-course h1 {
+    text-align: center;
+    color: #1e3a8a; /* Синий цвет для заголовка */
+    font-size: 2rem;
     margin-bottom: 20px;
 }
 
-/* Кнопка для записи на курс */
-.course-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+.edit-course label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #4b5563; /* Тёмно-серый цвет для меток */
 }
 
-.course-button:hover {
-    background-color: #45a049;
+.edit-course input, .edit-course textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #1e3a8a; /* Синие границы */
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: #f0f9ff; /* Лёгкий синий фон для полей ввода */
+}
+
+.edit-course input:focus, .edit-course textarea:focus {
+    border-color: #2563eb; /* Более яркий синий при фокусе */
+    outline: none;
+}
+
+.edit-course textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.edit-course button {
+    background-color: #2563eb; /* Синий фон для кнопки */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.edit-course button:hover {
+    background-color: #1e40af; /* Темный синий при наведении */
+}
+
+.edit-course button:focus {
+    outline: none;
+}
+
+.edit-course .loading {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #888;
 }

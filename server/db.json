@@ -1,33 +1,39 @@
 {
   "teachers": [
     {
-      "id": 1,
-      "name": "Alice Johnson",
-      "email": "alice@example.com"
+      "id": "1",
+      "userId": "d38c",
+      "teachingCourseIds": [
+        1,
+        2
+      ]
     },
     {
-      "id": 2,
-      "name": "Bob Smith",
-      "email": "bob@example.com"
+      "id": "2",
+      "userId": "333b",
+      "teachingCourseIds": [
+        1,
+        2
+      ]
     }
   ],
   "courses": [
     {
-      "id": 1,
-      "title": "Java Basics",
-      "description": "Intro to Java",
+      "id": "1",
+      "title": "Java Script Basics",
+      "description": "Intro to JS",
       "teacherId": 1
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "Web Development",
       "description": "HTML/CSS/JS",
-      "teacherId": 2
+      "teacherId": 1
     }
   ],
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "username": "testuser",
       "name": "Test User",
       "email": "test@example.com",
@@ -48,15 +54,24 @@
       "name": "Daniar Aitanov",
       "email": "daniar.aitanov@narxoz.kz",
       "password": "$2b$10$sfYMoSo4YSE/vgNGUDNDYOkriO8hI5oToWDFtmrSPjPwk29iZtGDK",
-      "role": "user"
+      "role": "student"
+    },
+    {
+      "id": "333b",
+      "username": "prof.aitanov",
+      "name": "Professor Aitanov",
+      "email": "prof.aitanov@gmail.com",
+      "password": "$2b$10$2ZsDaR2xZXQBI7EiyOuVN.k3NkxsWEvGHm2mHTtchPMO1qF7bfhly",
+      "role": "teacher"
     }
-  ], 
+  ],
   "students": [
     {
-      "id": 1,
-      "userId": 1,
-      "courseId": 1,
-      "enrolledCourseIds": [1, 2]
+      "id": "6385",
+      "userId": "1314",
+      "enrolledCourseIds": [
+        "2"
+      ]
     }
   ]
 }
