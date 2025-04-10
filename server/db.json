@@ -3,9 +3,7 @@
     {
       "id": "1",
       "userId": "d38c",
-      "teachingCourseIds": [
-        "1"
-      ]
+      "teachingCourseIds": []
     },
     {
       "id": "2",
@@ -18,12 +16,6 @@
   ],
   "courses": [
     {
-      "id": "1",
-      "title": "Java Script Basics",
-      "description": "Intro to JS",
-      "teacherId": 1
-    },
-    {
       "id": "2",
       "title": "Web Development",
       "description": "HTML/CSS/JS",
@@ -31,8 +23,8 @@
     },
     {
       "id": "1f93",
-      "title": "Introduction to Algorithms ",
-      "description": "Algorithms and Data Structure",
+      "title": "Introduction to Algorithms  2",
+      "description": "Algorithms and Data Structure 2",
       "teacherId": 2
     }
   ],
@@ -76,13 +68,73 @@
       "email": "admin@gmail.com",
       "password": "$2b$10$d5xPAwoN.vMibrafbO/7yuNEpI..8lMgC1Oa9zOwzNZPFeNJju7CO",
       "role": "admin"
+    },
+    {
+      "id": "e332",
+      "username": "amantai.aibol",
+      "name": "Aibol Amantai",
+      "email": "amantai.aibol@narxoz.kz",
+      "password": "$2b$10$SDQZWVzEKfgmWHVDuHLS7elxS9wcoV.WRDZp2uZqpXKO.fqDwJ5Ne",
+      "role": "student"
+    },
+    {
+      "id": "aa11",
+      "username": "john.doe",
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "password": "$2b$10$0gZsEaZb4zJOuhGrSzjeo.WBoybWSFxIq.Av1qyAt/mZKHHhLxnne",
+      "role": "student"
+    },
+    {
+      "id": "fc5d",
+      "username": "newaccount",
+      "name": "New Account",
+      "email": "newaccount@gmail.com",
+      "password": "$2b$10$.29FmftHr46iKl8Jnjszc.AJxvel6I9OJkL38t0COS19eEzBsOxpC",
+      "role": "student"
+    },
+    {
+      "id": "7677",
+      "username": "azicussdu",
+      "name": "Azamat",
+      "email": "azicussdu@gmail.com",
+      "password": "$2b$10$9Fn/DoseGFJsS1REvr9OXuJ9eY8wGEcxS.mlZg5/xZF06JXGV6/3q",
+      "role": "student"
     }
   ],
   "students": [
     {
       "id": "6385",
       "userId": "1314",
+      "enrolledCourseIds": [
+        null
+      ]
+    },
+    {
+      "id": "f6f1",
+      "userId": "e332",
       "enrolledCourseIds": []
+    },
+    {
+      "id": "8855",
+      "userId": "aa11",
+      "enrolledCourseIds": [
+        "2"
+      ]
+    },
+    {
+      "id": "dd09",
+      "userId": "fc5d",
+      "enrolledCourseIds": [
+        "2"
+      ]
+    },
+    {
+      "id": "46a4",
+      "userId": "7677",
+      "enrolledCourseIds": [
+        "1f93"
+      ]
     }
   ]
 }

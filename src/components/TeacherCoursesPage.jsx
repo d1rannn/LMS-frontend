@@ -9,22 +9,19 @@ const TeacherCoursesPage = () => {
     const [courses, setCourses] = useState([]);
 
     useEffect(() => {
-        if (!user) return;  // Если user еще не загружен, не выполняем запросы
+        if (!user) return;
 
         const fetchTeacherCourses = async () => {
             try {
-                // 1. Получаем данные преподавателя
                 const teacherRes = await fetch(`http://localhost:3001/teachers?userId=${user.id}`);
                 const teacherData = await teacherRes.json();
                 const teacher = teacherData[0];
 
                 if (!teacher) return;
 
-                // 2. Загружаем все курсы
                 const coursesRes = await fetch(`http://localhost:3001/courses`);
                 const allCourses = await coursesRes.json();
 
-                // 3. Фильтруем курсы, которые ведёт преподаватель
                 const teacherCourses = allCourses.filter(course =>
                     teacher.teachingCourseIds.includes(String(course.id))
                 );
@@ -36,7 +33,7 @@ const TeacherCoursesPage = () => {
         };
 
         fetchTeacherCourses();
-    }, [user]); // Перезапускаем эффект, если user меняется
+    }, [user]);
 
     return (
         <div className="teacher-courses">

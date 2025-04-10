@@ -4,17 +4,17 @@ import "../style/style.css";
 import Navbar from "./Navbar";
 
 const Courses = () => {
-    const { user } = useContext(AuthContext);  // Получаем пользователя из контекста
+    const { user, login } = useContext(AuthContext); // login нужен для обновления роли
     const [courses, setCourses] = useState([]);
-    const [enrolledCourseIds, setEnrolledCourseIds] = useState([]); // Стейт для записанных курсов
+    const [enrolledCourseIds, setEnrolledCourseIds] = useState([]);
 
     useEffect(() => {
-        // Получение курсов с JSON-сервера
+        // Загружаем список всех курсов
         fetch(`http://localhost:3001/courses`)
             .then((response) => response.json())
             .then((data) => setCourses(data));
 
-        // Проверка, на какие курсы записан пользователь
+        // Загружаем курсы, на которые записан текущий пользователь
         fetch(`http://localhost:3001/students?userId=${user.id}`)
             .then((response) => response.json())
             .then((data) => {
@@ -22,11 +22,11 @@ const Courses = () => {
                     setEnrolledCourseIds(data[0].enrolledCourseIds || []);
                 }
             });
-    }, [user.id]); // Эффект зависит от user.id, чтобы обновить данные при изменении пользователя
+    }, [user.id]);
 
     const handleSignUp = async (courseId) => {
         try {
-            // Обновляем роль пользователя на "student"
+            // 1. Обновляем роль в базе
             await fetch(`http://localhost:3001/users/${user.id}`, {
                 method: "PATCH",
                 headers: {
@@ -35,13 +35,17 @@ const Courses = () => {
                 body: JSON.stringify({ role: "student" })
             });
 
-            // Получаем студента по userId
+            // 2. Получаем обновлённого пользователя и сохраняем в контекст
+            const updatedUserRes = await fetch(`http://localhost:3001/users/${user.id}`);
+            const updatedUser = await updatedUserRes.json();
+            login(updatedUser); // теперь контекст = student
+
+            // 3. Обновляем таблицу students
             const res = await fetch(`http://localhost:3001/students?userId=${user.id}`);
             const students = await res.json();
             const existingStudent = students[0];
 
             if (existingStudent) {
-                // Если курс ещё не записан, добавляем
                 if (!existingStudent.enrolledCourseIds.includes(courseId)) {
                     const updatedCourses = [...existingStudent.enrolledCourseIds, courseId];
                     await fetch(`http://localhost:3001/students/${existingStudent.id}`, {
@@ -49,10 +53,9 @@ const Courses = () => {
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ enrolledCourseIds: updatedCourses })
                     });
-                    setEnrolledCourseIds(updatedCourses); // Обновляем локальный стейт
+                    setEnrolledCourseIds(updatedCourses);
                 }
             } else {
-                // Если студента нет — создаём новый
                 await fetch(`http://localhost:3001/students`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -61,7 +64,7 @@ const Courses = () => {
                         enrolledCourseIds: [courseId]
                     })
                 });
-                setEnrolledCourseIds([courseId]); // Обновляем локальный стейт
+                setEnrolledCourseIds([courseId]);
             }
 
             alert("You have successfully signed up!");
@@ -74,20 +77,18 @@ const Courses = () => {
 
     const handleUnsubscribe = async (courseId) => {
         try {
-            // Получаем студента по userId
             const res = await fetch(`http://localhost:3001/students?userId=${user.id}`);
             const students = await res.json();
             const existingStudent = students[0];
 
             if (existingStudent) {
-                // Убираем курс из списка записанных
                 const updatedCourses = existingStudent.enrolledCourseIds.filter((id) => id !== courseId);
                 await fetch(`http://localhost:3001/students/${existingStudent.id}`, {
                     method: "PATCH",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ enrolledCourseIds: updatedCourses })
                 });
-                setEnrolledCourseIds(updatedCourses); // Обновляем локальный стейт
+                setEnrolledCourseIds(updatedCourses);
             }
 
             alert("You have successfully unsubscribed from the course!");

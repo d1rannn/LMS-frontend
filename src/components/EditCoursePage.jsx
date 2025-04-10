@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../style/style.css";
 
-const API = "http://localhost:3001";
-
 const EditCoursePage = () => {
     const { id } = useParams(); // Получаем ID курса из URL
     const [course, setCourse] = useState(null);
@@ -13,7 +11,7 @@ const EditCoursePage = () => {
     useEffect(() => {
         const fetchCourse = async () => {
             try {
-                const res = await fetch(`${API}/courses/${id}`);
+                const res = await fetch(`http://localhost:3001/courses/${id}`);
                 const data = await res.json();
                 setCourse(data);
                 setUpdatedCourse({ title: data.title, description: data.description });
@@ -33,7 +31,7 @@ const EditCoursePage = () => {
     const handleSave = async () => {
         try {
             // Обновляем данные курса на сервере
-            await fetch(`${API}/courses/${id}`, {
+            await fetch(`http://localhost:3001/courses/${id}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(updatedCourse),

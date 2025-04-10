@@ -41,7 +41,7 @@ const AdminDashboard = () => {
     };
 
     const getCourseTitle = (courseId) => {
-        if (!courseId) return "Unknown Course";  // Проверка на null или undefined
+        if (!courseId) return "Unknown Course";
 
         const c = courses.find(c => c.id.toString() === courseId.toString());
         return c ? c.title : "Unknown Course";
