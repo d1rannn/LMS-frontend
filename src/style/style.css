@@ -36,7 +36,8 @@ nav ul li a:hover {
 }
 
 /* Styling for the Logout button */
-nav ul li button {
+nav ul li button,
+.button {
     background-color: #007bff;
     color: white;
     border: none;
@@ -49,14 +50,13 @@ nav ul li button {
     vertical-align: middle;
 }
 
-/* Hover effect for button */
-nav ul li button:hover {
+nav ul li button:hover,
+.button:hover {
     background-color: #0056b3;
 }
 
 /* ------------------ Register / Form Styles ------------------ */
 
-/* General form container style */
 .form-container {
     max-width: 350px;
     margin: 50px auto;
@@ -66,14 +66,12 @@ nav ul li button:hover {
     background-color: #f9f9f9;
 }
 
-/* Title style */
 .form-container h2,
 .form-container h1 {
     text-align: center;
     margin-bottom: 20px;
 }
 
-/* Form input field styles */
 .form-container input {
     width: 80%;
     padding: 10px;
@@ -83,13 +81,11 @@ nav ul li button:hover {
     font-size: 1rem;
 }
 
-/* Focus effect for input fields */
 .form-container input:focus {
     border-color: #007bff;
     outline: none;
 }
 
-/* Submit button style */
 .form-container button {
     width: 87%;
     padding: 10px;
@@ -102,7 +98,6 @@ nav ul li button:hover {
     margin: 10px 0;
 }
 
-/* Button hover effect */
 .form-container button:hover {
     background-color: #0056b3;
 }
@@ -140,7 +135,6 @@ nav ul li button:hover {
 
 /* ------------------ Course List Styles ------------------ */
 
-/* Контейнер со всеми карточками */
 .course-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -148,7 +142,6 @@ nav ul li button:hover {
     padding: 20px;
 }
 
-/* Одна карточка курса */
 .course-card {
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
@@ -163,34 +156,36 @@ nav ul li button:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Заголовок курса */
 .course-card h3 {
     font-size: 20px;
     margin-bottom: 10px;
     color: #333;
 }
 
-/* Описание курса */
 .course-card p {
     font-size: 16px;
     color: #666;
 }
 
 .course-card button {
-    width: 18%;
-    padding: 10px;
-    font-size: 1.2rem;
-    background-color: #007bff;
+    width: auto;
+    min-width: 120px;
+    padding: 10px 16px;
+    font-size: 1rem;
+    background-color: #2563eb;
     color: white;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    margin: 10px 0;
+    margin-top: 10px;
+}
+
+.course-card button:hover {
+    background-color: #1e40af;
 }
 
 /* ------------------ Edit Course Styles ------------------ */
 
-/* Стили для страницы редактирования курса */
 .edit-course {
     max-width: 800px;
     margin: 30px auto;
@@ -202,7 +197,7 @@ nav ul li button:hover {
 
 .edit-course h1 {
     text-align: center;
-    color: #1e3a8a; /* Синий цвет для заголовка */
+    color: #1e3a8a;
     font-size: 2rem;
     margin-bottom: 20px;
 }
@@ -212,21 +207,21 @@ nav ul li button:hover {
     margin-bottom: 8px;
     font-weight: bold;
     font-size: 1rem;
-    color: #4b5563; /* Тёмно-серый цвет для меток */
+    color: #4b5563;
 }
 
 .edit-course input, .edit-course textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
-    border: 1px solid #1e3a8a; /* Синие границы */
+    border: 1px solid #1e3a8a;
     border-radius: 4px;
     font-size: 1rem;
-    background-color: #f0f9ff; /* Лёгкий синий фон для полей ввода */
+    background-color: #f0f9ff;
 }
 
 .edit-course input:focus, .edit-course textarea:focus {
-    border-color: #2563eb; /* Более яркий синий при фокусе */
+    border-color: #2563eb;
     outline: none;
 }
 
@@ -236,7 +231,7 @@ nav ul li button:hover {
 }
 
 .edit-course button {
-    background-color: #2563eb; /* Синий фон для кнопки */
+    background-color: #2563eb;
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -247,15 +242,122 @@ nav ul li button:hover {
 }
 
 .edit-course button:hover {
-    background-color: #1e40af; /* Темный синий при наведении */
-}
-
-.edit-course button:focus {
-    outline: none;
+    background-color: #1e40af;
 }
 
 .edit-course .loading {
     text-align: center;
     font-size: 1.2rem;
     color: #888;
+}
+
+/* ------------------ Admin Dashboard Styles ------------------ */
+
+.admin-dashboard {
+    padding: 20px;
+}
+
+.student-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.student-card {
+    background-color: #f0f9ff;
+    padding: 15px;
+    border-radius: 8px;
+    width: 300px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.student-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.student-card li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.remove-btn {
+    background-color: #dc2626;
+    border: none;
+    color: white;
+    padding: 4px 8px;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.remove-btn:hover {
+    background-color: #b91c1c;
+}
+
+/* ------------------ Admin Course Manager Styles ------------------ */
+
+.admin-course-manager {
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.course-form {
+    margin-bottom: 30px;
+    background-color: #f3f8ff;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.course-form input,
+.course-form textarea,
+.course-form select {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+}
+
+.course-form button {
+    background-color: #2563eb;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* ------------------ Унифицированные Кнопки ------------------ */
+
+button {
+    font-family: inherit;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #2563eb;
+    color: white;
+    padding: 10px 20px;
+}
+
+.btn-primary:hover {
+    background-color: #1e40af;
+}
+
+.btn-danger {
+    background-color: #dc2626;
+    color: white;
+    padding: 8px 16px;
+}
+
+.btn-danger:hover {
+    background-color: #b91c1c;
 }

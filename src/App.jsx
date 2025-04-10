@@ -7,6 +7,8 @@ import Courses from './components/Courses';
 import StudentCoursesPage from './components/StudentCoursesPage';
 import TeacherCoursesPage from "./components/TeacherCoursesPage";
 import EditCoursePage from "./components/EditCoursePage";
+import AdminDashboard from "./components/AdminDashboard";
+import AdminCourseManager from "./components/AdminCourseManager";
 
 export const AuthContext = createContext();
 
@@ -32,6 +34,8 @@ export default function App() {
                     <Route path="/my-courses" element={<StudentCoursesPage />} />
                     <Route path="/my-teaching-courses" element={<TeacherCoursesPage />} />
                     <Route path="/edit-course/:id" element={<EditCoursePage />} />
+                    <Route path="/admin" element={<AdminDashboard />} />
+                    <Route path="/admin-course-manager" element={<AdminCourseManager />} />
                 </Routes>
             </BrowserRouter>
         </AuthContext.Provider>

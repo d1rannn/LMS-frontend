@@ -4,16 +4,15 @@
       "id": "1",
       "userId": "d38c",
       "teachingCourseIds": [
-        1,
-        2
+        "1"
       ]
     },
     {
       "id": "2",
       "userId": "333b",
       "teachingCourseIds": [
-        1,
-        2
+        "2",
+        "1f93"
       ]
     }
   ],
@@ -28,7 +27,13 @@
       "id": "2",
       "title": "Web Development",
       "description": "HTML/CSS/JS",
-      "teacherId": 1
+      "teacherId": 2
+    },
+    {
+      "id": "1f93",
+      "title": "Introduction to Algorithms ",
+      "description": "Algorithms and Data Structure",
+      "teacherId": 2
     }
   ],
   "users": [
@@ -63,15 +68,21 @@
       "email": "prof.aitanov@gmail.com",
       "password": "$2b$10$2ZsDaR2xZXQBI7EiyOuVN.k3NkxsWEvGHm2mHTtchPMO1qF7bfhly",
       "role": "teacher"
+    },
+    {
+      "id": "bfe5",
+      "username": "admin",
+      "name": "Admin",
+      "email": "admin@gmail.com",
+      "password": "$2b$10$d5xPAwoN.vMibrafbO/7yuNEpI..8lMgC1Oa9zOwzNZPFeNJju7CO",
+      "role": "admin"
     }
   ],
   "students": [
     {
       "id": "6385",
       "userId": "1314",
-      "enrolledCourseIds": [
-        "2"
-      ]
+      "enrolledCourseIds": []
     }
   ]
 }

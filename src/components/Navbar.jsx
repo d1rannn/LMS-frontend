@@ -13,7 +13,15 @@ function Navbar() {
 
                 {user ? (
                     <>
-                        {user.role !== "teacher" && <li><Link to="/courses">Courses</Link></li>}
+                        {(user.role !== "teacher") &&
+                            (user.role !== "admin") && <li><Link to="/courses">Courses</Link></li>}
+
+                        {user.role === "admin" && (
+                            <>
+                                <li><Link to="/admin">Admin Dashboard</Link></li>
+                                <li><Link to="/admin-course-manager">Admin Course Manager</Link></li>
+                            </>
+                        )}
 
                         {user.role === "student" && (
                             <li><Link to="/my-courses">My Courses</Link></li>

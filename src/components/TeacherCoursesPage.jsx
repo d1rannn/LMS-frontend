@@ -26,7 +26,7 @@ const TeacherCoursesPage = () => {
 
                 // 3. Фильтруем курсы, которые ведёт преподаватель
                 const teacherCourses = allCourses.filter(course =>
-                    teacher.teachingCourseIds.includes(Number(course.id))
+                    teacher.teachingCourseIds.includes(String(course.id))
                 );
 
                 setCourses(teacherCourses);
