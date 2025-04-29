@@ -23,8 +23,6 @@ export default function App() {
         setUser(null);
     }
 
-    const [message, setMessage] = useState('');
-
     return (
         <AuthContext.Provider value={{user, login, logout}}>
             <BrowserRouter>
