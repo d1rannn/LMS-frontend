@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../style/style.css';  // Import custom CSS for the registration page
+import '../style/style.css';
 
 const Register = () => {
     const navigate = useNavigate();
@@ -16,11 +16,27 @@ const Register = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const notify = (title, body) => {
+        if ("Notification" in window) {
+            if (Notification.permission === "granted") {
+                new Notification(title, { body });
+            } else if (Notification.permission !== "denied") {
+                Notification.requestPermission().then(permission => {
+                    if (permission === "granted") {
+                        new Notification(title, { body });
+                    }
+                });
+            }
+        } else {
+            alert(body); // fallback if notifications not supported
+        }
+    };
+
     const handleSubmit = async e => {
         e.preventDefault();
 
         if (formData.username !== formData.username.toLowerCase().trim()) {
-            alert('Username must be in lowercase and without spaces.');
+            notify('Registration Error', 'Username must be lowercase and without spaces.');
             setFormData({ ...formData, username: '' });
             return;
         }
@@ -33,20 +49,20 @@ const Register = () => {
                 },
                 body: JSON.stringify({
                     ...formData,
-                    role: 'STUDENT' // or "USER", depending on your backend
+                    role: 'STUDENT'
                 })
             });
 
             if (response.ok) {
-                alert('Registration successful!');
+                notify('Success', 'Registration successful!');
                 navigate('/');
             } else {
                 const error = await response.text();
-                alert(`Registration failed: ${error}`);
+                notify('Registration Failed', error);
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('An error occurred.');
+            notify('Error', 'An unexpected error occurred.');
         }
     };
 

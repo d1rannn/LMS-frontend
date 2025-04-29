@@ -1,13 +1,31 @@
-import React, { useContext } from "react";
-import '../style/home.css';
-import Navbar from "./Navbar";
-import { AuthContext } from "../App";
+import { useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import Navbar from './Navbar';
+import "../style/style.css";
 
-const HomePage = () => {
-    const { user } = useContext(AuthContext);
+function Home() {
+    const location = useLocation();
+    const [toast, setToast] = useState(null);
+
+    // Grab the user directly from Redux state.auth.user
+    const user = useSelector(state => state.auth?.user);
+
+    useEffect(() => {
+        if (location.state && location.state.toastMessage) {
+            setToast({ message: location.state.toastMessage, type: "success" });
+            setTimeout(() => setToast(null), 3000);
+        }
+    }, [location.state]);
 
     return (
         <div className="wrapper">
+            {toast && (
+                <div className={`toast ${toast.type}`}>
+                    {toast.message}
+                </div>
+            )}
+
             <Navbar />
             <div className="main-content">
                 <h1 className="display-4">Welcome to Our Platform</h1>
@@ -20,6 +38,6 @@ const HomePage = () => {
             </div>
         </div>
     );
-};
+}
 
-export default HomePage;
+export default Home;

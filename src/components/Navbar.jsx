@@ -1,16 +1,23 @@
-import { useContext, useState, useCallback } from "react";
+// src/components/Navbar.jsx
+import { useState, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { AuthContext } from "../App";
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../store/authActions';
 import React from "react"; // For React.memo
 import "../style/home.css";
 
 function Navbar() {
-    const { user, logout } = useContext(AuthContext);
+    const user = useSelector(state => state.auth?.user);
+    const dispatch = useDispatch();
     const [isExpanded, setIsExpanded] = useState(false);
     const location = useLocation();
 
     const handleMouseEnter = () => setIsExpanded(true);
     const handleMouseLeave = () => setIsExpanded(false);
+
+    const handleLogout = () => {
+        dispatch(logout());
+    };
 
     const renderLink = useCallback(
         (to, emoji, label) => {
@@ -53,7 +60,7 @@ function Navbar() {
                             </>
                         )}
 
-                        <button onClick={logout} className="nav-link logout-button">
+                        <button onClick={handleLogout} className="nav-link logout-button">
                             <span className="nav-icon">🚪</span>
                             <span className="nav-label">Выйти</span>
                         </button>

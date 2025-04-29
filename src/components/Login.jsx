@@ -1,66 +1,52 @@
-import { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../App";
-import bcrypt from 'bcryptjs'; // Import bcryptjs for hashing the password
-import '../style/style.css';
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../store/authActions";
+import "../style/style.css";
 
 function Login() {
-    const { login } = useContext(AuthContext);
-    const [loginValue, setLoginValue] = useState("");
-    const [password, setPassword] = useState("");
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    async function handleLogin(e) {
+    const [loginValue, setLoginValue] = useState("");
+    const [password, setPassword] = useState("");
+    const [toast, setToast] = useState(null);
+
+    const showToast = (message, type = "success") => {
+        setToast({ message, type });
+        setTimeout(() => setToast(null), 3000);
+    };
+
+    const handleLogin = async (e) => {
         e.preventDefault();
+        try {
+            const res = await fetch("http://localhost:8080/api/auth/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ login: loginValue, password }),
+            });
 
-        let response = await fetch(`http://localhost:3001/users?email=${loginValue}`);
-
-        if (response.ok) {
-            let data = await response.json();
-
-            if (data.length > 0) {
-                const user = data[0];
-
-                const passwordMatches = await bcrypt.compare(password, user.password); // bcrypt.compare checks hashed passwords
-
-                if (passwordMatches) {
-                    login(user);
-                    navigate("/");
-                } else {
-                    alert("You've entered an invalid email or password. Please try again.");
-                    setPassword("");
-                }
+            if (res.ok) {
+                const user = await res.json();
+                dispatch(loginSuccess(user));            // <-- inject into Redux
+                navigate("/", { state: { toastMessage: "Login successful!" } });
+            } else {
+                const err = await res.text();
+                showToast(err || "Invalid credentials", "error");
+                setPassword("");
             }
+        } catch (err) {
+            console.error("Login error:", err);
+            showToast("Unexpected error occurred.", "error");
         }
-
-        // If no user was found by email, try searching by username
-        response = await fetch(`http://localhost:3001/users?username=${loginValue}`);
-
-        if (response.ok) {
-            const data = await response.json();
-
-            if (data.length > 0) {
-                const user = data[0];
-
-                const passwordMatches = await bcrypt.compare(password, user.password);
-
-                if (passwordMatches) {
-                    login(user);
-                    navigate("/");
-                } else {
-                    alert("You've entered an invalid username or password. Please try again.");
-                    setPassword("");
-                }
-            }
-        } else {
-            alert("You've entered an invalid email or username. Please try again.");
-            setPassword("");
-        }
-    }
+    };
 
     return (
         <div className="form-container">
             <h1>Login</h1>
+
+            {toast && <div className={`toast ${toast.type}`}>{toast.message}</div>}
+
             <form onSubmit={handleLogin}>
                 <input
                     type="text"
