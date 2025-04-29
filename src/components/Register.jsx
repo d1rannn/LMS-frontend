@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import bcrypt from 'bcryptjs'; // Import bcryptjs for hashing the password
 import '../style/style.css';  // Import custom CSS for the registration page
 
 const Register = () => {
@@ -20,16 +19,6 @@ const Register = () => {
     const handleSubmit = async e => {
         e.preventDefault();
 
-        // Hash the password using bcrypt before sending it to the server
-        const hashedPassword = bcrypt.hashSync(formData.password, 10); // 10 is the salt rounds
-
-        const newUser = {
-            ...formData,
-            // Save the hashed password
-            password: hashedPassword,
-            role: 'user', // Default role for new users
-        };
-
         if (formData.username !== formData.username.toLowerCase().trim()) {
             alert('Username must be in lowercase and without spaces.');
             setFormData({ ...formData, username: '' });
@@ -37,20 +26,23 @@ const Register = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:3001/users', {
+            const response = await fetch('http://localhost:8080/api/users/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(newUser) // Send the user data with hashed password
+                body: JSON.stringify({
+                    ...formData,
+                    role: 'STUDENT' // or "USER", depending on your backend
+                })
             });
 
             if (response.ok) {
-                const user = await response.json();
                 alert('Registration successful!');
                 navigate('/');
             } else {
-                alert('Registration failed!');
+                const error = await response.text();
+                alert(`Registration failed: ${error}`);
             }
         } catch (error) {
             console.error('Error:', error);

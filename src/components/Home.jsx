@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import '../style/style.css';
+import '../style/home.css';
 import Navbar from "./Navbar";
 import { AuthContext } from "../App";
 
@@ -7,8 +7,9 @@ const HomePage = () => {
     const { user } = useContext(AuthContext);
 
     return (
-        <div className="home-container">
-            <div className="text-center">
+        <div className="wrapper">
+            <Navbar />
+            <div className="main-content">
                 <h1 className="display-4">Welcome to Our Platform</h1>
                 <p className="lead">Your journey to learning starts here.</p>
                 {user ? (
@@ -16,7 +17,6 @@ const HomePage = () => {
                 ) : (
                     <h4>Please log in to see your details.</h4>
                 )}
-                <Navbar />
             </div>
         </div>
     );
