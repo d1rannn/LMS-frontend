@@ -1,4 +1,4 @@
-import { useState, createContext } from 'react';
+import { useState, useEffect, createContext } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Register from './components/Register';
 import Home from './components/Home';
@@ -22,6 +22,8 @@ export default function App() {
     function logout() {
         setUser(null);
     }
+
+    const [message, setMessage] = useState('');
 
     return (
         <AuthContext.Provider value={{user, login, logout}}>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../App";
-import "../style/style.css";
+import "../style/home.css";
 import Navbar from "./Navbar";
 
 const TeacherCoursesPage = () => {
@@ -36,27 +36,26 @@ const TeacherCoursesPage = () => {
     }, [user]);
 
     return (
-        <div className="teacher-courses">
+        <div className="main-content"> {/* Matches the .main-content in CSS */}
             <Navbar />
-            <div className="text-center">
+            <div className="course-section"> {/* Matches the .course-section in CSS */}
                 <h1>Your Teaching Courses</h1>
+                {courses.length === 0 ? (
+                    <p>You are not teaching any courses yet.</p>
+                ) : (
+                    <div className="course-container"> {/* Matches the .course-container in CSS */}
+                        {courses.map(course => (
+                            <div key={course.id} className="course-card"> {/* Matches the .course-card in CSS */}
+                                <h3>{course.title}</h3>
+                                <p>{course.description}</p>
+                                <Link to={`/edit-course/${course.id}`}>
+                                    <button>Edit Course</button>
+                                </Link>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
-
-            {courses.length === 0 ? (
-                <p>You are not teaching any courses yet.</p>
-            ) : (
-                <div className="course-list">
-                    {courses.map(course => (
-                        <div key={course.id} className="course-card">
-                            <h3>{course.title}</h3>
-                            <p>{course.description}</p>
-                            <Link to={`/edit-course/${course.id}`}>
-                                <button>Edit Course</button>
-                            </Link>
-                        </div>
-                    ))}
-                </div>
-            )}
         </div>
     );
 };
