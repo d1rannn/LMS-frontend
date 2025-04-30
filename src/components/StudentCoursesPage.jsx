@@ -2,25 +2,44 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 function StudentCoursesPage() {
-    const user = useSelector(state => state.auth?.user);
+    const user = useSelector(state => state.user);
     const [myCourses, setMyCourses] = useState([]);
 
     useEffect(() => {
-        if (user) {
-            fetch(`/students/${user.id}/courses`)
-                .then(res => res.json())
-                .then(data => setMyCourses(data));
+        if (user && user.id) {
+            fetch(`http://localhost:8080/api/students/user/${user.id}`)
+                .then(res => {
+                    if (!res.ok) throw new Error('Failed to fetch courses');
+                    return res.json();
+                })
+                .then(data => {
+                    if (data.enrolledCourses) {
+                        setMyCourses(data.enrolledCourses);
+                    }
+                })
+                .catch(console.error);
         }
     }, [user]);
 
-    if (!user || user.role !== 'student') {
+    if (!user || user.role !== 'STUDENT') {
         return <p>Access denied</p>;
     }
 
     return (
-        <div>
+        <div className="student-courses-page">
             <h1>My Courses</h1>
-            {/* render myCourses */}
+            {myCourses.length === 0 ? (
+                <p>You are not enrolled in any courses yet.</p>
+            ) : (
+                <ul>
+                    {myCourses.map(course => (
+                        <li key={course.id}>
+                            <h3>{course.title}</h3>
+                            <p>{course.description}</p>
+                        </li>
+                    ))}
+                </ul>
+            )}
         </div>
     );
 }
