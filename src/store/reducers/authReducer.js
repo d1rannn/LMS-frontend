@@ -1,16 +1,29 @@
-// src/store/reducers/authReducer.js
-import { LOGIN_SUCCESS, LOGOUT } from '../authActions';
+const savedUser = JSON.parse(localStorage.getItem('user'));
 
 const initialState = {
-    user: null
+    user: savedUser || null,
+    justLoggedIn: false,
 };
 
 export default function authReducer(state = initialState, action) {
     switch (action.type) {
-        case LOGIN_SUCCESS:
-            return { ...state, user: action.payload };
-        case LOGOUT:
-            return { ...state, user: null };
+        case 'LOGIN_SUCCESS':
+            return {
+                ...state,
+                user: action.payload,
+                justLoggedIn: true,
+            };
+        case 'LOGOUT':
+            return {
+                ...state,
+                user: null,
+                justLoggedIn: false,
+            };
+        case 'CLEAR_LOGIN_FLAG':
+            return {
+                ...state,
+                justLoggedIn: false,
+            };
         default:
             return state;
     }

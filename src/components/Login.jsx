@@ -28,8 +28,9 @@ function Login() {
 
             if (res.ok) {
                 const user = await res.json();
-                dispatch(loginSuccess(user));            // <-- inject into Redux
-                navigate("/", { state: { toastMessage: "Login successful!" } });
+                dispatch(loginSuccess(user));
+                console.log("Logging in, navigating to home...");
+                navigate("/", { replace: true });
             } else {
                 const err = await res.text();
                 showToast(err || "Invalid credentials", "error");

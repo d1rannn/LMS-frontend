@@ -1,22 +1,26 @@
 import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import { clearLoginFlag } from '../store/authActions';
 import Navbar from './Navbar';
 import "../style/style.css";
 
 function Home() {
+    const justLoggedIn = useSelector(state => state.justLoggedIn);
+    const dispatch = useDispatch();
     const location = useLocation();
     const [toast, setToast] = useState(null);
 
     // Grab the user directly from Redux state.auth.user
-    const user = useSelector(state => state.auth?.user);
+    const user = useSelector(state => state.user);
 
     useEffect(() => {
-        if (location.state && location.state.toastMessage) {
-            setToast({ message: location.state.toastMessage, type: "success" });
+        if (justLoggedIn) {
+            setToast({ message: "Login successful!", type: "success" });
             setTimeout(() => setToast(null), 3000);
+            dispatch(clearLoginFlag()); // ✅ reset after showing
         }
-    }, [location.state]);
+    }, [justLoggedIn, dispatch]);
 
     return (
         <div className="wrapper">

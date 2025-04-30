@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 function TeacherCoursesPage() {
-    const user = useSelector(state => state.auth.user);
+    const user = useSelector(state => state.auth?.user);
     const [teachingCourses, setTeachingCourses] = useState([]);
 
     useEffect(() => {

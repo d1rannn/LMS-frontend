@@ -1,16 +1,10 @@
-// src/store/store.js
 import { createStore, combineReducers } from 'redux';
-import authReducer from './reducers/authReducer';
-// import other reducers...
+import authReducer from './reducers/authReducer'; // ✅ correct path
 
 const rootReducer = combineReducers({
-    auth: authReducer,
-    // other: otherReducer,
+    auth: authReducer, // ✅ MUST match what you're accessing in useSelector(state => state.auth.user)
 });
 
-const store = createStore(
-    rootReducer
-    // , window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const store = createStore(rootReducer);
 
 export default store;

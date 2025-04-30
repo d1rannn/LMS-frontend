@@ -1,12 +1,18 @@
-// src/store/actions/authActions.js
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGOUT        = 'LOGOUT';
+export const loginSuccess = (user) => {
+    localStorage.setItem('user', JSON.stringify(user)); // ✅ Save user to localStorage
+    return {
+        type: 'LOGIN_SUCCESS',
+        payload: user,
+    };
+};
 
-export const loginSuccess = (user) => ({
-    type: LOGIN_SUCCESS,
-    payload: user
-});
+export const logout = () => {
+    localStorage.removeItem('user');
+    return {
+        type: 'LOGOUT',
+    };
+};
 
-export const logout = () => ({
-    type: LOGOUT
+export const clearLoginFlag = () => ({
+    type: 'CLEAR_LOGIN_FLAG',
 });

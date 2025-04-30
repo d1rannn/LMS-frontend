@@ -1,13 +1,12 @@
-// src/components/Navbar.jsx
-import { useState, useCallback } from "react";
+import {useState, useCallback, useEffect} from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../store/authActions';
-import React from "react"; // For React.memo
 import "../style/home.css";
 
 function Navbar() {
-    const user = useSelector(state => state.auth?.user);
+    const user = useSelector(state => state.user);
+
     const dispatch = useDispatch();
     const [isExpanded, setIsExpanded] = useState(false);
     const location = useLocation();
@@ -44,16 +43,16 @@ function Navbar() {
 
                 {user ? (
                     <>
-                        {(user.role !== "teacher" && user.role !== "admin") &&
+                        {(user.role !== "TEACHER" && user.role !== "ADMIN") &&
                             renderLink("/courses", "📚", "Курсы")}
 
-                        {user.role === "student" &&
+                        {user.role === "STUDENT" &&
                             renderLink("/my-courses", "🎓", "Мои курсы")}
 
-                        {user.role === "teacher" &&
+                        {user.role === "TEACHER" &&
                             renderLink("/my-teaching-courses", "👩‍🏫", "Мои предметы")}
 
-                        {user.role === "admin" && (
+                        {user.role === "ADMIN" && (
                             <>
                                 {renderLink("/admin", "🛠️", "Панель Админа")}
                                 {renderLink("/admin-course-manager", "📚", "Курсы (Admin)")}
@@ -71,9 +70,10 @@ function Navbar() {
                         {renderLink("/login", "🔑", "Войти")}
                     </>
                 )}
+                {user && <h4 style={{ color: 'white' }}>Logged in as: {user.role}</h4>}
             </nav>
         </aside>
     );
 }
 
-export default React.memo(Navbar);
+export default Navbar;

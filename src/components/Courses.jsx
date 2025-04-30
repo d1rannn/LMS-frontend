@@ -3,8 +3,7 @@ import { useSelector } from 'react-redux';
 import Navbar from './Navbar';
 
 function Courses() {
-    // grab the logged-in user from Redux
-    const user = useSelector(state => state.auth.user);
+    const user = useSelector(state => state.auth?.user);
 
     const [courses, setCourses] = useState([]);
     const [enrolledCourseIds, setEnrolledCourseIds] = useState([]);

@@ -1,8 +1,9 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
-import store from "./store";
+import store from './store';
 
+import Navbar               from "./components/Navbar";
 import Register             from "./components/Register";
 import Home                 from "./components/Home";
 import Login                from "./components/Login";
@@ -17,6 +18,7 @@ export default function App() {
     return (
         <Provider store={store}>
             <BrowserRouter>
+                <Navbar />
                 <Routes>
                     <Route path="/"                     element={<Home />} />
                     <Route path="/login"                element={<Login />} />
