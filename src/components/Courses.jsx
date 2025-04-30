@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import Navbar from './Navbar';
 
 function Courses() {
-    const user = useSelector(state => state.auth?.user);
+    const user = useSelector(state => state.user);
 
     const [courses, setCourses] = useState([]);
     const [enrolledCourseIds, setEnrolledCourseIds] = useState([]);
@@ -15,15 +15,15 @@ function Courses() {
             .then(setCourses)
             .catch(console.error);
 
-        // once we have a user, fetch their enrolled courses
+        // fetch enrolled courses
         if (user && user.id) {
             fetch(`http://localhost:8080/api/students/user/${user.id}`)
                 .then(res => {
-                    if (res.status === 404) return null;
+                    if (!res.ok) throw new Error("Failed to fetch enrolled courses");
                     return res.json();
                 })
                 .then(data => {
-                    if (data?.enrolledCourses) {
+                    if (data.enrolledCourses) {
                         const ids = data.enrolledCourses.map(c => c.id);
                         setEnrolledCourseIds(ids);
                     }
@@ -32,12 +32,48 @@ function Courses() {
         }
     }, [user]);
 
+    const handleEnroll = (courseId) => {
+        if (!user || !user.id) return;
+
+        fetch(`http://localhost:8080/api/enrollments/enroll`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                studentId: user.id,
+                courseId: courseId,
+            }),
+        })
+            .then(res => {
+                if (!res.ok) throw new Error("Failed to enroll");
+                setEnrolledCourseIds(prev => [...prev, courseId]);
+            })
+            .catch(console.error);
+    };
+
+    const handleUnsubscribe = (courseId) => {
+        if (!user || !user.id) return;
+
+        fetch(`http://localhost:8080/api/enrollments/unsubscribe`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                studentId: user.id,
+                courseId: courseId,
+            }),
+        })
+            .then(res => {
+                if (!res.ok) throw new Error("Failed to unsubscribe");
+                setEnrolledCourseIds(prev => prev.filter(id => id !== courseId));
+            })
+            .catch(console.error);
+    };
+
     return (
         <div className="page-layout">
             <Navbar />
             <div className="page-content">
                 <div className="text-center">
-                    <h1>Hi, {user?.name || 'Guest'}</h1>
+                    <h1>Hi, {user?.name}</h1>
                     <h2>Available courses:</h2>
                 </div>
                 <div className="course-grid">
@@ -48,7 +84,7 @@ function Courses() {
                                 <h3>{course.title}</h3>
                                 <p>{course.description}</p>
                                 {!isEnrolled ? (
-                                    <button onClick={() => {/* dispatch enroll action here */}}>
+                                    <button onClick={() => handleEnroll(course.id)}>
                                         Sign up
                                     </button>
                                 ) : (
@@ -56,7 +92,7 @@ function Courses() {
                                         <p className="already-enrolled">
                                             You are already enrolled
                                         </p>
-                                        <button onClick={() => {/* dispatch unsubscribe action here */}}>
+                                        <button onClick={() => handleUnsubscribe(course.id)}>
                                             Unsubscribe
                                         </button>
                                     </>
