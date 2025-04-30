@@ -12,31 +12,22 @@ const Register = () => {
         password: ''
     });
 
-    const handleChange = e => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+    const [toast, setToast] = useState(null);
+
+    const showToast = (message, type = "success") => {
+        setToast({ message, type });
+        setTimeout(() => setToast(null), 3000);
     };
 
-    const notify = (title, body) => {
-        if ("Notification" in window) {
-            if (Notification.permission === "granted") {
-                new Notification(title, { body });
-            } else if (Notification.permission !== "denied") {
-                Notification.requestPermission().then(permission => {
-                    if (permission === "granted") {
-                        new Notification(title, { body });
-                    }
-                });
-            }
-        } else {
-            alert(body); // fallback if notifications not supported
-        }
+    const handleChange = e => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = async e => {
         e.preventDefault();
 
         if (formData.username !== formData.username.toLowerCase().trim()) {
-            notify('Registration Error', 'Username must be lowercase and without spaces.');
+            showToast('Username must be lowercase and without spaces.', 'error');
             setFormData({ ...formData, username: '' });
             return;
         }
@@ -49,26 +40,29 @@ const Register = () => {
                 },
                 body: JSON.stringify({
                     ...formData,
-                    role: 'STUDENT'
+                    role: 'USER'
                 })
             });
 
             if (response.ok) {
-                notify('Success', 'Registration successful!');
-                navigate('/');
+                showToast('Registration successful!');
+                setTimeout(() => navigate('/'), 1000); // brief delay to let toast show
             } else {
                 const error = await response.text();
-                notify('Registration Failed', error);
+                showToast(error || 'Registration failed.', 'error');
             }
         } catch (error) {
             console.error('Error:', error);
-            notify('Error', 'An unexpected error occurred.');
+            showToast('An unexpected error occurred.', 'error');
         }
     };
 
     return (
         <div className="form-container">
             <h2>Register</h2>
+
+            {toast && <div className={`toast ${toast.type}`}>{toast.message}</div>}
+
             <form onSubmit={handleSubmit}>
                 <input
                     name="name"
