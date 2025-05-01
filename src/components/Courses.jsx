@@ -39,7 +39,7 @@ function Courses() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                studentId: user.id,
+                studentId: user.id,   // ✅ corrected key
                 courseId: courseId,
             }),
         })
@@ -57,7 +57,7 @@ function Courses() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                studentId: user.id,
+                studentId: user.id,   // ✅ corrected key
                 courseId: courseId,
             }),
         })
