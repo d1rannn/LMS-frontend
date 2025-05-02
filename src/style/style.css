@@ -744,3 +744,129 @@ button {
 .module-card:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
+/* Add space between buttons */
+.save-module-btn,
+.delete-module-btn,
+.back-to-edit-btn {
+    margin-bottom: 10px; /* Adds space between save and delete buttons */
+}
+
+/* Progress Tracker Styles */
+.progress-tracker {
+    margin-bottom: 1.5rem;
+}
+
+.progress-tracker h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background-color: #e5e7eb; /* Light gray */
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    transition: width 0.5s ease-in-out;
+}
+
+.progress-tracker p {
+    font-size: 0.875rem;
+    color: #4b5563; /* Text color */
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+/* Optional: Add some space between the progress bar and other elements */
+.page-content {
+    margin-bottom: 20px;
+}
+
+.module-content {
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Flexbox layout for buttons */
+.text-center {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Responsive Design for Cards */
+@media (max-width: 768px) {
+    .module-card {
+        padding: 15px;
+    }
+    .page-content {
+        padding: 20px;
+    }
+}
+
+/* Module Page Style */
+.text-center {
+    text-align: center;
+}
+
+.text-green-600 {
+    color: #16a34a;
+}
+
+.text-red-600 {
+    color: #ef4444;
+}
+
+.bg-green-600 {
+    background-color: #16a34a;
+}
+
+.bg-green-700 {
+    background-color: #15803d;
+}
+
+.bg-blue-500 {
+    background-color: #3b82f6;
+}
+
+.bg-blue-600 {
+    background-color: #2563eb;
+}
+
+.bg-gray-400 {
+    background-color: #9ca3af;
+}
+
+.module-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.module-card h1, .module-card h2 {
+    margin-bottom: 10px; /* Reduced spacing */
+}
+
+.module-card button {
+    margin-top: 10px;
+}
+
+.module-card iframe {
+    margin-top: 10px;
+}
+
+.page-content {
+    padding: 20px; /* Reduced padding around content */
+}
+
+.text-center {
+    text-align: center;
+}

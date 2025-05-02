@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
+import ProgressTracker from './ProgressTracker'; // Import Progress Tracker component
 import "../style/style.css";
 
 function CoursePage() {
@@ -13,6 +14,7 @@ function CoursePage() {
     const [modules, setModules] = useState([]);
     const [isEnrolled, setIsEnrolled] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [progress, setProgress] = useState(0); // Track progress here
 
     useEffect(() => {
         if (!user || !user.id) return;
@@ -47,6 +49,15 @@ function CoursePage() {
                 console.error(err);
                 setLoading(false);
             });
+
+        // 4. Fetch user progress for this course
+        fetch(`http://localhost:8080/api/progress/${user.id}/course/${id}`)
+            .then(res => res.json())
+            .then(progressData => {
+                setProgress(progressData.percentageCompleted); // Assuming API returns percentage of progress
+            })
+            .catch(console.error);
+
     }, [id, user, navigate]);
 
     if (loading || !course) return <div className="text-center p-4">Loading course...</div>;
@@ -58,6 +69,9 @@ function CoursePage() {
                 <h1 className="text-3xl font-bold text-center mb-2">{course.title}</h1>
                 <p className="text-gray-700 text-center mb-6">{course.description}</p>
 
+                {/* Display progress tracker */}
+                <ProgressTracker progress={progress} />
+
                 <div className="course-card-container">
                     <div className="course-card">
                         <h2>📚 Course Modules</h2>
@@ -67,8 +81,8 @@ function CoursePage() {
                         ) : (
                             <div className="module-grid">
                                 {modules.map((mod, index) => (
-                                    <div className="module-card">
-                                        <h3 className="text-lg font-semibold mb-1">📘: {mod.title}</h3>
+                                    <div className="module-card" key={mod.id}>
+                                        <h3 className="text-lg font-semibold mb-1">📘 {mod.title}</h3>
                                         <p className="text-gray-700 mb-2">{mod.content}</p>
                                         <button
                                             className="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded text-sm"

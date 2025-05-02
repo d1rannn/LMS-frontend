@@ -48,6 +48,10 @@ function ModuleEditorPage() {
             });
     };
 
+    const handleDeleteModule = () => {
+        // Logic to handle module deletion can go here
+    };
+
     if (loading) return <div className="text-center p-6">Loading module...</div>;
     if (error) return <div className="text-center p-6 text-red-500">{error}</div>;
 
@@ -55,42 +59,53 @@ function ModuleEditorPage() {
         <div className="page-layout">
             <Navbar />
             <div className="page-content max-w-4xl mx-auto p-6">
-                <h1 className="text-2xl font-bold mb-4">Editing Module: {module.title}</h1>
+                <div className="edit-course">
+                    <h1 className="text-2xl font-bold mb-4 text-center text-blue-700">Editing Module: {module.title}</h1>
 
-                {/* Module Title */}
-                <label>Module Title</label>
-                <input
-                    type="text"
-                    value={module.title}
-                    onChange={(e) => setModule({ ...module, title: e.target.value })}
-                    className="w-full border border-gray-300 rounded px-4 py-2 mb-4"
-                />
+                    {/* Module Title */}
+                    <label>Module Title</label>
+                    <input
+                        type="text"
+                        value={module.title}
+                        onChange={(e) => setModule({ ...module, title: e.target.value })}
+                        className="w-full border border-gray-300 rounded px-4 py-2 mb-4 focus:ring-2 focus:ring-blue-600"
+                    />
 
-                {/* Module Content */}
-                <label>Module Content</label>
-                <textarea
-                    rows={6}
-                    value={module.content}
-                    onChange={(e) => setModule({ ...module, content: e.target.value })}
-                    className="w-full border border-gray-300 rounded px-4 py-2 mb-4"
-                />
+                    {/* Module Content */}
+                    <label>Module Content</label>
+                    <textarea
+                        rows={6}
+                        value={module.content}
+                        onChange={(e) => setModule({ ...module, content: e.target.value })}
+                        className="w-full border border-gray-300 rounded px-4 py-2 mb-4 focus:ring-2 focus:ring-blue-600"
+                    />
 
-                <div className="text-center">
-                    <button
-                        onClick={handleSaveModule}
-                        className="bg-blue-600 text-white px-6 py-2 rounded mt-4"
-                    >
-                        Save Module
-                    </button>
-                </div>
+                    <div className="text-center">
+                        <button
+                            onClick={handleSaveModule}
+                            className="btn-primary w-full py-2 save-module-btn"
+                        >
+                            Save Module
+                        </button>
+                    </div>
 
-                <div className="text-center mt-4">
-                    <button
-                        onClick={() => navigate(-1)} // Navigate back to course or previous page
-                        className="bg-gray-400 text-white px-6 py-2 rounded"
-                    >
-                        Back to Course
-                    </button>
+                    <div className="text-center">
+                        <button
+                            onClick={handleDeleteModule}
+                            className="btn-danger w-full py-2 delete-module-btn"
+                        >
+                            Delete Module
+                        </button>
+                    </div>
+
+                    <div className="text-center">
+                        <button
+                            onClick={() => navigate(-1)} // Navigate back to course or previous page
+                            className="btn-primary w-full py-2 back-to-edit-btn-btn"
+                        >
+                            Back to Edit Course
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
