@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Navbar from './Navbar';
+import "../style/style.css";
 
 function Courses() {
     const user = useSelector(state => state.user);
@@ -39,7 +40,7 @@ function Courses() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                studentId: user.id,   // ✅ corrected key
+                studentId: user.id,
                 courseId: courseId,
             }),
         })
@@ -57,7 +58,7 @@ function Courses() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                studentId: user.id,   // ✅ corrected key
+                studentId: user.id,
                 courseId: courseId,
             }),
         })
@@ -92,7 +93,9 @@ function Courses() {
                                         <p className="already-enrolled">
                                             You are already enrolled
                                         </p>
-                                        <button onClick={() => handleUnsubscribe(course.id)}>
+                                        <button
+                                            className="unenrolled"
+                                            onClick={() => handleUnsubscribe(course.id)}>
                                             Unsubscribe
                                         </button>
                                     </>

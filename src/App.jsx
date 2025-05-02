@@ -13,6 +13,9 @@ import TeacherCoursesPage   from "./components/TeacherCoursesPage";
 import EditCoursePage       from "./components/EditCoursePage";
 import AdminDashboard       from "./components/AdminDashboard";
 import AdminCourseManager   from "./components/AdminCourseManager";
+import CoursePage from "./components/CoursePage";
+import ModulePage from "./components/ModulePage";
+import ModuleEditorPage from "./components/ModuleEditorPage";
 
 export default function App() {
     return (
@@ -24,11 +27,14 @@ export default function App() {
                     <Route path="/login"                element={<Login />} />
                     <Route path="/register"             element={<Register />} />
                     <Route path="/courses"              element={<Courses />} />
-                    <Route path="/my-courses"           element={<StudentCoursesPage />} />
-                    <Route path="/my-teaching-courses"  element={<TeacherCoursesPage />} />
+                    <Route path="/student/courses"      element={<StudentCoursesPage />} />
+                    <Route path="/teacher/courses"      element={<TeacherCoursesPage />} />
                     <Route path="/edit-course/:id"      element={<EditCoursePage />} />
                     <Route path="/admin"                element={<AdminDashboard />} />
                     <Route path="/admin-course-manager" element={<AdminCourseManager />} />
+                    <Route path="/courses/:id"          element={<CoursePage />} />
+                    <Route path="/courses/:id/modules/:moduleId" element={<ModulePage />} />
+                    <Route path="/modules/:moduleId/edit"        element={<ModuleEditorPage />} />
                 </Routes>
             </BrowserRouter>
         </Provider>

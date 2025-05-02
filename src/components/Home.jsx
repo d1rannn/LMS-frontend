@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import { clearLoginFlag } from '../store/authActions';
+import { clearLoginFlag } from '../store/actions/authActions';
 import Navbar from './Navbar';
 import "../style/style.css";
 

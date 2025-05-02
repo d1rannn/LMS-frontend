@@ -1,18 +1,15 @@
-import {useState, useCallback, useEffect} from "react";
+import { useCallback, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../store/authActions';
-import "../style/home.css";
+import { logout } from '../store/actions/authActions';
+import "../style/style.css";
 
 function Navbar() {
-    const user = useSelector(state => state.user);
-
+    const user = useSelector(state => state?.user);
     const dispatch = useDispatch();
-    const [isExpanded, setIsExpanded] = useState(false);
     const location = useLocation();
 
-    const handleMouseEnter = () => setIsExpanded(true);
-    const handleMouseLeave = () => setIsExpanded(false);
+    const [isExpanded, setIsExpanded] = useState(false);
 
     const handleLogout = () => {
         dispatch(logout());
@@ -34,10 +31,11 @@ function Navbar() {
     return (
         <aside
             className={`sidebar ${isExpanded ? "expanded" : "collapsed"}`}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+            onMouseEnter={() => setIsExpanded(true)}
+            onMouseLeave={() => setIsExpanded(false)}
         >
             <div className="sidebar-logo">🧠</div>
+
             <nav className="sidebar-nav">
                 {renderLink("/", "🏠", "Главная")}
 
@@ -47,10 +45,10 @@ function Navbar() {
                             renderLink("/courses", "📚", "Курсы")}
 
                         {user.role === "STUDENT" &&
-                            renderLink("/my-courses", "🎓", "Мои курсы")}
+                            renderLink("/student/courses", "🎓", "Мои курсы")}
 
                         {user.role === "TEACHER" &&
-                            renderLink("/my-teaching-courses", "👩‍🏫", "Мои предметы")}
+                            renderLink("/teacher/courses", "👩‍🏫", "Мои предметы")}
 
                         {user.role === "ADMIN" && (
                             <>
@@ -70,7 +68,10 @@ function Navbar() {
                         {renderLink("/login", "🔑", "Войти")}
                     </>
                 )}
-                {user && <h4 style={{ color: 'white' }}>Logged in as: {user.role}</h4>}
+
+                {user && isExpanded && (
+                    <h4 style={{ color: '#333', paddingLeft: '1rem' }}>Роль: {user.role}</h4>
+                )}
             </nav>
         </aside>
     );

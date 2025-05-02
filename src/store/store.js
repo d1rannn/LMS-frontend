@@ -1,8 +1,8 @@
-import { createStore, combineReducers } from 'redux';
-import authReducer from './reducers/authReducer'; // ✅ correct path
+import { combineReducers, createStore } from 'redux';
+import authReducer from './reducers/authReducer'; // или './authReducer'
 
 const rootReducer = combineReducers({
-    auth: authReducer, // ✅ MUST match what you're accessing in useSelector(state => state.auth.user)
+    auth: authReducer,
 });
 
 const store = createStore(rootReducer);
