@@ -16,3 +16,10 @@ export const logout = () => {
 export const clearLoginFlag = () => ({
     type: 'CLEAR_LOGIN_FLAG',
 });
+
+export const updateAvatar = (avatarUrl) => {
+    return {
+        type: 'UPDATE_AVATAR',
+        payload: avatarUrl, // Avatar URL to be updated in the store
+    };
+};

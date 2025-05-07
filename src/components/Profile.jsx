@@ -4,7 +4,7 @@ import Navbar from './Navbar';
 import '../style/profile.css';
 
 function Profile() {
-    const user = useSelector(state => state.user);
+    const user = useSelector(state => state?.user);
 
     if (!user) {
         return (
@@ -18,6 +18,10 @@ function Profile() {
         );
     }
 
+    // Assuming avatar URL is returned as part of the user object in the form of: /uploads/avatar/{filename}
+    const avatarUrl = `http://localhost:8080/uploads/avatars/avatar_${user.id}.jpg` || '/uploads/avatars/default-avatar.jpg';
+    console.log('Avatar URL:', avatarUrl);
+
     return (
         <div className="wrapper">
             <Navbar />
@@ -25,11 +29,23 @@ function Profile() {
                 <div className="contact-us-container">
                     <h1 className="display-4">Your Profile</h1>
                     <p className="lead">View and manage your account details.</p>
+
                     <div className="profile-details">
                         <h3>Account Information</h3>
+
+                        {/* Display Avatar */}
+                        <div className="avatar-container">
+                            <img
+                                src={avatarUrl} // Fetch avatar URL from backend
+                                alt="Avatar"
+                                className="avatar"
+                            />
+                        </div>
+
                         <p><strong>Email:</strong> {user.email}</p>
                         <p><strong>Role:</strong> {user.role}</p>
                     </div>
+
                     <div className="profile-actions">
                         <Link to={`/profile/${user.id}/update-name`} className="btn-primary update-name-btn">Update Name</Link>
                         <Link to={`/profile/${user.id}/change-password`} className="btn-primary change-password-btn">Change Password</Link>

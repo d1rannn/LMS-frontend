@@ -24,6 +24,14 @@ export default function authReducer(state = initialState, action) {
                 ...state,
                 justLoggedIn: false,
             };
+        case 'UPDATE_AVATAR': // New action to handle avatar update
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    avatarUrl: action.payload, // Update the avatar URL in the user object
+                },
+            };
         default:
             return state;
     }

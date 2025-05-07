@@ -17,8 +17,6 @@ import CoursePage from "./components/CoursePage";
 import ModulePage from "./components/ModulePage";
 import ModuleEditorPage from "./components/ModuleEditorPage";
 import ContactUs from "./components/ContactUs";
-import TestPage from "./components/TestPage";
-import TestCreator from "./components/TestCreator";
 import Profile from "./components/Profile";
 import UpdateName from "./components/UpdateName";
 import ChangePassword from "./components/ChangePassword";
@@ -46,8 +44,6 @@ export default function App() {
                     <Route path="/courses/:id"          element={<CoursePage />} />
                     <Route path="/courses/:id/modules/:moduleId" element={<ModulePage />} />
                     <Route path="/modules/:moduleId/edit"        element={<ModuleEditorPage />} />
-                    <Route path="/tests/:testId"                 element={<TestPage />} />
-                    <Route path="/tests/create"                  element={<TestCreator />} />
                 </Routes>
             </BrowserRouter>
         </Provider>
