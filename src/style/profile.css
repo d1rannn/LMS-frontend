@@ -1,0 +1,229 @@
+/* Profile page container */
+.wrapper {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    padding-top: 20px;
+}
+
+/* Main content */
+.main-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Toast Notifications */
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+}
+
+.toast.success {
+    background-color: #28a745;
+}
+
+.toast.error {
+    background-color: #dc3545;
+}
+
+.toast .close-btn {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+/* Contact Us Section */
+.contact-us-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.contact-us-container h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.contact-us-container p.lead {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.profile-details {
+    margin-bottom: 30px;
+}
+
+.profile-details h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.profile-details p {
+    font-size: 1rem;
+    margin: 5px 0;
+}
+
+/* Form styles */
+.contact-us-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contact-us-form label {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #333;
+}
+
+.contact-us-form input {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.contact-us-form input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.contact-us-form button {
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.contact-us-form button:hover {
+    background-color: #0056b3;
+}
+
+.contact-us-form .btn-primary {
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.contact-us-form .btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.contact-us-form h3 {
+    margin-top: 30px;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+/* Profile Page Responsiveness */
+@media (max-width: 768px) {
+    .contact-us-container {
+        padding: 15px;
+    }
+
+    .contact-us-form button {
+        padding: 10px;
+    }
+}
+
+.contact-us-form .btn-primary {
+    margin-bottom: 15px;
+}
+
+.contact-us-form .btn-secondary {
+    margin-top: 15px; /* Adds space between the buttons */
+}
+
+/* Specific styles for the buttons */
+.contact-us-form .btn-primary {
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.contact-us-form .btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Link styling */
+.contact-us-form .btn-primary {
+    display: inline-block;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1rem;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none; /* Remove underline */
+    transition: background-color 0.3s ease;
+}
+
+.contact-us-form .btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Add space between the links in .profile-actions */
+.profile-actions .btn-primary {
+    display: inline-block;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1rem;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    margin-bottom: 15px; /* Adds space below each link */
+}
+
+.profile-actions .btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Add space between the Update Name and Change Password links */
+.profile-actions .update-name-btn {
+    background-color: #28a745; /* Green for Update Name */
+    margin-right: 15px; /* Space between links */
+}
+
+.profile-actions .update-name-btn:hover {
+    background-color: #218838; /* Darker green for hover */
+}
+
+.profile-actions .change-password-btn {
+    background-color: #007bff; /* Blue for Change Password */
+}
+
+.profile-actions .change-password-btn:hover {
+    background-color: #0056b3; /* Darker blue for hover */
+}

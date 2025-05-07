@@ -16,6 +16,12 @@ import AdminCourseManager   from "./components/AdminCourseManager";
 import CoursePage from "./components/CoursePage";
 import ModulePage from "./components/ModulePage";
 import ModuleEditorPage from "./components/ModuleEditorPage";
+import ContactUs from "./components/ContactUs";
+import TestPage from "./components/TestPage";
+import TestCreator from "./components/TestCreator";
+import Profile from "./components/Profile";
+import UpdateName from "./components/UpdateName";
+import ChangePassword from "./components/ChangePassword";
 
 export default function App() {
     return (
@@ -26,6 +32,11 @@ export default function App() {
                     <Route path="/"                     element={<Home />} />
                     <Route path="/login"                element={<Login />} />
                     <Route path="/register"             element={<Register />} />
+                    <Route path="/contact-us"           element={<ContactUs />} />
+                    <Route path="/profile/:id"          element={<Profile />} />
+                    <Route path="/profile/:id/update-name"     element={<UpdateName />} />
+                    <Route path="/profile/:id/change-password" element={<ChangePassword />} />
+
                     <Route path="/courses"              element={<Courses />} />
                     <Route path="/student/courses"      element={<StudentCoursesPage />} />
                     <Route path="/teacher/courses"      element={<TeacherCoursesPage />} />
@@ -35,6 +46,8 @@ export default function App() {
                     <Route path="/courses/:id"          element={<CoursePage />} />
                     <Route path="/courses/:id/modules/:moduleId" element={<ModulePage />} />
                     <Route path="/modules/:moduleId/edit"        element={<ModuleEditorPage />} />
+                    <Route path="/tests/:testId"                 element={<TestPage />} />
+                    <Route path="/tests/create"                  element={<TestCreator />} />
                 </Routes>
             </BrowserRouter>
         </Provider>

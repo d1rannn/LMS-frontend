@@ -37,25 +37,28 @@ function Navbar() {
             <div className="sidebar-logo">🧠</div>
 
             <nav className="sidebar-nav">
-                {renderLink("/", "🏠", "Главная")}
+                {renderLink("/", "🏠", "Home")}
 
                 {user ? (
                     <>
                         {(user.role !== "TEACHER" && user.role !== "ADMIN") &&
-                            renderLink("/courses", "📚", "Курсы")}
+                            renderLink("/courses", "📚", "Courses")}
 
                         {user.role === "STUDENT" &&
-                            renderLink("/student/courses", "🎓", "Мои курсы")}
+                            renderLink("/student/courses", "🎓", "My courses")}
 
                         {user.role === "TEACHER" &&
-                            renderLink("/teacher/courses", "👩‍🏫", "Мои предметы")}
+                            renderLink("/teacher/courses", "👩‍🏫", "My teaching Courses")}
 
                         {user.role === "ADMIN" && (
                             <>
-                                {renderLink("/admin", "🛠️", "Панель Админа")}
-                                {renderLink("/admin-course-manager", "📚", "Курсы (Admin)")}
+                                {renderLink("/admin", "🛠️", "Admin Panel")}
+                                {renderLink("/admin-course-manager", "📚", "Courses (Admin)")}
                             </>
                         )}
+
+                        {/* Profile Link */}
+                        {renderLink(`/profile/${user.id}`, "👤", "Profile")}
 
                         <button onClick={handleLogout} className="nav-link logout-button">
                             <span className="nav-icon">🚪</span>
