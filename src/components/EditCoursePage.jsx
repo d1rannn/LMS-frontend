@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Navbar from './Navbar';
+import "../style/style.css";
 
 function EditCoursePage() {
     const { id } = useParams();
@@ -66,7 +67,10 @@ function EditCoursePage() {
                     <label>Description</label>
                     <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={6} />
 
-                    <button onClick={handleSaveCourse}>Save Course</button>
+                    <div className="button-container">
+                        <button onClick={handleSaveCourse}>Save Course</button>
+                        <button onClick={() => navigate(`/courses/${course.id}`)}>Back to Courses Page</button>
+                    </div>
 
                     <hr className="my-6" />
                     <h2>Click to Module you want to edit</h2>

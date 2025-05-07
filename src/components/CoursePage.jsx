@@ -8,7 +8,7 @@ import "../style/style.css";
 function CoursePage() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const user = useSelector(state => state.user);
+    const user = useSelector(state => state?.user);
 
     const [course, setCourse] = useState(null);
     const [modules, setModules] = useState([]);
@@ -69,8 +69,9 @@ function CoursePage() {
                 <h1 className="text-3xl font-bold text-center mb-2">{course.title}</h1>
                 <p className="text-gray-700 text-center mb-6">{course.description}</p>
 
-                {/* Display progress tracker */}
-                <ProgressTracker progress={progress} />
+                {user.role !== 'TEACHER' && (
+                    <ProgressTracker progress={progress} />
+                )}
 
                 <div className="course-card-container">
                     <div className="course-card">

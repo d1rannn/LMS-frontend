@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';  // Import useSelector
+import { useSelector } from 'react-redux'; // Import useSelector
 import Navbar from './Navbar';
 import "../style/style.css";  // Import the updated style
 
 function ModulePage() {
-    const { id, moduleId } = useParams(); // id = courseId
+    const { id, moduleId } = useParams(); // id = courseId, moduleId = moduleId
     const navigate = useNavigate();
 
     // Get the user data from the Redux store
@@ -26,7 +26,6 @@ function ModulePage() {
         })
             .then(res => {
                 if (!res.ok) {
-                    console.error(`Error status: ${res.status}`);
                     throw new Error("Failed to load module");
                 }
                 return res.json();
@@ -36,23 +35,30 @@ function ModulePage() {
                 setLoading(false);
             })
             .catch(err => {
-                console.error("Fetch error:", err);
+                setError(err.message);
                 setLoading(false);
             });
 
-        // 2. Fetch the current completion status for the module
+        // 2. Check completion status from localStorage on page load
+        const isCompletedInLocalStorage = localStorage.getItem(`module-${moduleId}-completed`) === 'true';
+        setCompleted(isCompletedInLocalStorage);
+
+        // 3. Fetch the current completion status for the module from the backend
         fetch(`http://localhost:8080/api/progress/${user.id}/course/${id}`)
             .then(res => res.json())
             .then(progressData => {
-                // Check if the module ID is in the list of completed modules
-                setCompleted(progressData.completedModules.includes(Number(moduleId)));
+                const isCompletedInBackend = progressData.completedModules.includes(Number(moduleId));
+                if (isCompletedInBackend) {
+                    setCompleted(true);
+                    localStorage.setItem(`module-${moduleId}-completed`, 'true');
+                }
             })
             .catch(console.error);
 
     }, [moduleId, user, id]);
 
     const handleCompleteModule = () => {
-        // 3. Mark module as completed and update the progress
+        // 4. Mark module as completed and update the progress
         fetch(`http://localhost:8080/api/progress/${user.id}/course/${id}`, {
             method: 'POST',
             headers: {
@@ -66,20 +72,18 @@ function ModulePage() {
                 if (res.ok) {
                     // Update the completed state locally
                     setCompleted(true);
-                    // Fetch updated progress here to update the progress tracker
-                    fetch(`http://localhost:8080/api/progress/${user.id}/course/${id}`)
-                        .then(res => res.json())
-                        .then(progressData => {
-                            console.log("Updated progress:", progressData);
-                        })
-                        .catch(console.error);
-                } else {
-                    throw new Error('Failed to mark module as completed');
+                    localStorage.setItem(`module-${moduleId}-completed`, 'true'); // Save to localStorage
+                    // Fetch updated progress to update the progress tracker
+                    return fetch(`http://localhost:8080/api/progress/${user.id}/course/${id}`);
                 }
+                throw new Error('Failed to mark module as completed');
+            })
+            .then(res => res.json())
+            .then(progressData => {
+                console.log("Updated progress:", progressData);
             })
             .catch(error => {
-                console.error(error);
-                setError("Failed to update progress");
+                setError(error.message);
             });
     };
 
@@ -90,52 +94,75 @@ function ModulePage() {
     return (
         <div className="page-layout">
             <Navbar />
-            <div className="page-content max-w-4xl mx-auto p-4"> {/* Reduced padding */}
+            <div className="page-content max-w-4xl mx-auto p-4">
                 {/* Card Wrapper */}
                 <div className="module-card shadow-lg rounded-lg p-6 bg-white">
-                    <h1 className="text-2xl font-bold mb-3">{module.title}</h1> {/* Reduced bottom margin */}
+                    <h1 className="text-2xl font-bold mb-3">{module.title}</h1>
 
-                    {/* Video player placeholder */}
-                    <div className="mb-4"> {/* Reduced margin */}
+                    {/* Video link placeholder */}
+                    <div className="mb-4">
                         <h2 className="text-lg font-semibold mb-2">🎬 Video Lesson</h2>
-                        <div className="aspect-w-16 aspect-h-9 rounded overflow-hidden shadow">
-                            <iframe
-                                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                                title="Video Lesson"
-                                frameBorder="0"
-                                allowFullScreen
-                                className="w-full h-96"
-                            ></iframe>
-                        </div>
+                        {module.videoUrl ? (
+                            <a
+                                href={module.videoUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-600 underline"
+                            >
+                                Watch Video Lesson
+                            </a>
+                        ) : (
+                            <p>No video available for this module.</p>
+                        )}
                     </div>
 
                     {/* Content/Notes */}
-                    <div className="mb-4"> {/* Reduced margin */}
+                    <div className="mb-4">
                         <h2 className="text-lg font-semibold mb-1">📝 Notes</h2>
                         <p className="text-gray-800 whitespace-pre-line">
                             {module.content}
                         </p>
                     </div>
 
-                    {/* Show status */}
-                    <div className="text-center mt-4"> {/* Reduced margin */}
-                        <p className={`font-semibold text-lg ${completed ? 'text-green-600' : 'text-red-600'}`}>
-                            {completed ? 'Module Completed' : 'Module Not Completed'}
-                        </p>
+                    <div className="mb-4">
+                        <h2 className="text-lg font-semibold mb-1">📁 Download File</h2>
+                        {module.filePath ? (
+                            <a
+                                href={`http://localhost:8080/api/modules/${moduleId}/file/${module.filePath.split('/').pop()}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-600 underline"
+                            >
+                                Download File
+                            </a>
+                        ) : (
+                            <p>No file available for this module.</p>
+                        )}
                     </div>
+
+                    {/* Show status for students */}
+                    {user.role !== 'TEACHER' && (
+                        <div className="text-center mt-4">
+                            <p className={`font-semibold text-lg ${completed ? 'text-green-600' : 'text-red-600'}`}>
+                                {completed ? 'Module Completed' : 'Module Not Completed'}
+                            </p>
+                        </div>
+                    )}
 
                     {/* Button to mark as completed */}
-                    <div className="text-center mt-4"> {/* Reduced margin */}
-                        <button
-                            onClick={handleCompleteModule}
-                            className={`bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded ${completed ? 'bg-gray-400 cursor-not-allowed' : ''}`}
-                            disabled={completed}
-                        >
-                            {completed ? 'Module Completed' : 'Complete Module'}
-                        </button>
-                    </div>
+                    {user.role !== 'TEACHER' && (
+                        <div className="text-center mt-4">
+                            <button
+                                onClick={handleCompleteModule}
+                                className={`bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded ${completed ? 'bg-gray-400 cursor-not-allowed' : ''}`}
+                                disabled={completed}
+                            >
+                                {completed ? 'Module Completed' : 'Complete Module'}
+                            </button>
+                        </div>
+                    )}
 
-                    <div className="mt-6 text-center"> {/* Reduced margin */}
+                    <div className="mt-6 text-center">
                         <button
                             className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
                             onClick={() => navigate(-1)} // Navigate back to course or previous page

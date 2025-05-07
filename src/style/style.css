@@ -870,3 +870,23 @@ button {
 .text-center {
     text-align: center;
 }
+
+/* Add space between buttons */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Adjust this value to control the space */
+    margin-top: 20px; /* Optional: adds space above the buttons */
+}
+
+.button-container button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-container button:hover {
+    background-color: #0056b3; /* Optional: change the hover color for buttons */
+}

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Navbar from './Navbar';
+import "../style/style.css";
 
 function ModuleEditorPage() {
     const { moduleId } = useParams();
@@ -9,6 +11,7 @@ function ModuleEditorPage() {
     const [module, setModule] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [file, setFile] = useState(null); // To store the selected file
 
     useEffect(() => {
         // Fetch the module details for editing
@@ -22,7 +25,6 @@ function ModuleEditorPage() {
                 setLoading(false);
             })
             .catch(err => {
-                console.error(err);
                 setError("Failed to load module");
                 setLoading(false);
             });
@@ -45,6 +47,32 @@ function ModuleEditorPage() {
             })
             .catch(err => {
                 setError('Failed to save module');
+            });
+    };
+
+    const handleFileChange = (e) => {
+        setFile(e.target.files[0]);
+    };
+
+    const handleFileUpload = () => {
+        if (!file) {
+            alert('Please select a file first!');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        fetch(`http://localhost:8080/api/modules/${moduleId}/upload`, {
+            method: 'POST',
+            body: formData,
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(err => {
+                console.error('Error uploading file:', err);
             });
     };
 
@@ -79,6 +107,20 @@ function ModuleEditorPage() {
                         onChange={(e) => setModule({ ...module, content: e.target.value })}
                         className="w-full border border-gray-300 rounded px-4 py-2 mb-4 focus:ring-2 focus:ring-blue-600"
                     />
+
+                    {/* File Upload */}
+                    <label>Upload File (optional)</label>
+                    <input
+                        type="file"
+                        onChange={handleFileChange}
+                        className="w-full border border-gray-300 rounded px-4 py-2 mb-4"
+                    />
+                    <button
+                        onClick={handleFileUpload}
+                        className="btn-primary w-full py-2 mt-2"
+                    >
+                        Upload File
+                    </button>
 
                     <div className="text-center">
                         <button
