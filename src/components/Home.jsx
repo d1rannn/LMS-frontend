@@ -9,43 +9,38 @@ function Home() {
     const justLoggedIn = useSelector(state => state.justLoggedIn);
     const dispatch = useDispatch();
     const [toast, setToast] = useState(null);
-    const [userStatus, setUserStatus] = useState(null);  // New state for user status (banned or not)
+    const [userStatus, setUserStatus] = useState(null);
     const navigate = useNavigate();
 
-    // Grab the user directly from Redux state.auth.user
-    const user = useSelector(state => state.user);
+    const user = useSelector(state => state?.user);
 
     useEffect(() => {
         if (justLoggedIn) {
             setToast({ message: "Login successful!", type: "success" });
             setTimeout(() => setToast(null), 3000);
-            dispatch(clearLoginFlag()); // reset after showing
+            dispatch(clearLoginFlag());
         }
 
         if (user) {
-            // Fetch the user status from backend (to check if banned)
             fetchUserStatus(user.id);
         }
 
     }, [justLoggedIn, dispatch, user]);
 
-    // Function to fetch user status from the backend
     const fetchUserStatus = (userId) => {
         fetch(`http://localhost:8080/api/users/${userId}`)
             .then(res => res.json())
             .then(data => {
-                // Check if the user is banned from the backend
                 if (data.banned) {
                     setUserStatus('banned');
                     setToast({ message: "Oops, it seems you are banned. You don't have access to the platform.", type: "error" });
-                    localStorage.removeItem('user');  // Clear user data from local storage
+                    localStorage.removeItem('user');
 
-                    // Redirect to banned page and after some time to login
                     setTimeout(() => {
                         navigate('/banned');
                         setTimeout(() => {
                             navigate('/login');
-                        }, 3000);  // Redirect to login page after 3 seconds
+                        }, 3000);
                     }, 3000);
                 } else {
                     setUserStatus('active');

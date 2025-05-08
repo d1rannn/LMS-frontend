@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from "./Navbar";
-import "../style/style.css"; // Ensure this is included!
+import "../style/style.css";
+import {useSelector} from "react-redux";
 
 function TeacherManagement() {
     const [formData, setFormData] = useState({
@@ -13,6 +14,8 @@ function TeacherManagement() {
 
     const [toast, setToast] = useState(null);
     const navigate = useNavigate();
+
+    const user = useSelector(state => state?.user);
 
     useEffect(() => {
         if (!user) {

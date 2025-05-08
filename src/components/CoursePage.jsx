@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
-import ProgressTracker from './ProgressTracker'; // Import Progress Tracker component
+import ProgressTracker from './ProgressTracker';
 import "../style/style.css";
 
 function CoursePage() {
@@ -14,7 +14,7 @@ function CoursePage() {
     const [modules, setModules] = useState([]);
     const [isEnrolled, setIsEnrolled] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [progress, setProgress] = useState(0); // Track progress here
+    const [progress, setProgress] = useState(0);
 
     useEffect(() => {
         if (!user) {
@@ -26,11 +26,9 @@ function CoursePage() {
 
     useEffect(() => {
         if (!user || !user.role) {
-            // Handle the case when the user is not yet available or user.role is not available
             return <div>Loading...</div>;
         }
 
-        // 1. Fetch course
         fetch(`http://localhost:8080/api/courses/${id}`)
             .then(res => {
                 if (!res.ok) throw new Error("Failed to load course");
@@ -39,13 +37,11 @@ function CoursePage() {
             .then(data => setCourse(data))
             .catch(console.error);
 
-        // 2. Fetch modules
         fetch(`http://localhost:8080/api/courses/${id}/modules`)
             .then(res => res.json())
             .then(setModules)
             .catch(console.error);
 
-        // 3. Check enrollment
         fetch(`http://localhost:8080/api/students/user/${user.id}`)
             .then(res => res.json())
             .then(data => {
@@ -53,7 +49,7 @@ function CoursePage() {
                 setIsEnrolled(enrolled);
                 setLoading(false);
                 if (!enrolled) {
-                    navigate("/courses"); // redirect if not enrolled
+                    navigate("/courses");
                 }
             })
             .catch(err => {
@@ -61,11 +57,10 @@ function CoursePage() {
                 setLoading(false);
             });
 
-        // 4. Fetch user progress for this course
         fetch(`http://localhost:8080/api/progress/${user.id}/course/${id}`)
             .then(res => res.json())
             .then(progressData => {
-                setProgress(progressData.percentageCompleted); // Assuming API returns percentage of progress
+                setProgress(progressData.percentageCompleted);
             })
             .catch(console.error);
 

@@ -2,13 +2,12 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import "../style/admin-style.css";
-import Navbar from "./Navbar"; // Import the CSS file
+import Navbar from "./Navbar";
 
 function AdminDashboard() {
     const user = useSelector(state => state?.user);
     const navigate = useNavigate();
 
-    // Check if user is logged in and has 'ADMIN' role
     if (!user || user.role !== 'ADMIN') {
         return <p>Access denied. You must be an administrator to view this page.</p>;
     }

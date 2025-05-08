@@ -56,7 +56,6 @@ function Navbar() {
                             </>
                         )}
 
-                        {/* Profile Link */}
                         {renderLink(`/profile/${user.id}`, "👤", "Profile")}
 
                         <button onClick={handleLogout} className="nav-link logout-button">

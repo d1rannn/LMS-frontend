@@ -17,7 +17,6 @@ function ModulePage() {
     const [loading, setLoading] = useState(true);
     const [error, setError]     = useState(null);
 
-    // fetchProgress unchanged
     const fetchProgress = () => {
         fetch(`http://localhost:8080/api/progress/${user.id}/course/${courseIdNum}`, {
             cache: "no-cache"
@@ -97,7 +96,6 @@ function ModulePage() {
                 <div className="module-card shadow-lg rounded-lg p-6 bg-white">
                     <h1 className="text-2xl font-bold mb-3">{module.title}</h1>
 
-                    {/* Video */}
                     <div className="mb-4">
                         <h2 className="text-lg font-semibold mb-2">🎬 Video Lesson</h2>
                         {module.videoUrl
@@ -112,7 +110,6 @@ function ModulePage() {
                             : <p>No video available for this module.</p>}
                     </div>
 
-                    {/* Notes */}
                     <div className="mb-4">
                         <h2 className="text-lg font-semibold mb-1">📝 Notes</h2>
                         <p className="text-gray-800 whitespace-pre-line">
@@ -120,7 +117,6 @@ function ModulePage() {
                         </p>
                     </div>
 
-                    {/* File Download */}
                     <div className="mb-4">
                         <h2 className="text-lg font-semibold mb-1">📁 Download File</h2>
                         {module.filePath
@@ -135,7 +131,6 @@ function ModulePage() {
                             : <p>No file available for this module.</p>}
                     </div>
 
-                    {/* Complete Button */}
                     {user.role !== 'TEACHER' && (
                         <div className="text-center mt-4">
                             <button
@@ -147,7 +142,6 @@ function ModulePage() {
                         </div>
                     )}
 
-                    {/* Back Button */}
                     <div className="mt-6 text-center">
                         <button
                             className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"

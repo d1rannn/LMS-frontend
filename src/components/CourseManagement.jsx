@@ -10,7 +10,7 @@ function CourseManagement() {
     const [newCourse, setNewCourse] = useState({
         title: '',
         description: '',
-        teacherId: '', // use empty string to avoid uncontrolled -> controlled warning
+        teacherId: '',
     });
 
     const navigate = useNavigate();
@@ -59,7 +59,7 @@ function CourseManagement() {
         const payload = {
             title: newCourse.title,
             description: newCourse.description,
-            teacherId: parseInt(newCourse.teacherId), // 👈 именно так
+            teacherId: parseInt(newCourse.teacherId),
         };
 
         fetch('http://localhost:8080/api/courses', {

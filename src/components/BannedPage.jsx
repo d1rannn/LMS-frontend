@@ -1,5 +1,5 @@
 import React from 'react';
-import "../style/style.css"; // Ensure the global CSS is imported
+import "../style/style.css";
 
 function BannedPage() {
     return (

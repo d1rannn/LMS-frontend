@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux'; // Use useDispatch for Redux actions
+import { useSelector, useDispatch } from 'react-redux';
 import Navbar from './Navbar';
-import { loginSuccess } from '../store/actions/authActions'; // Import the loginSuccess action
+import { loginSuccess } from '../store/actions/authActions';
 import "../style/style.css";
 import {useNavigate} from "react-router-dom";
 
 function Courses() {
     const user = useSelector(state => state?.user);
-    const dispatch = useDispatch(); // Initialize useDispatch
+    const dispatch = useDispatch();
 
     const [courses, setCourses] = useState([]);
     const [enrolledCourseIds, setEnrolledCourseIds] = useState([]);
@@ -22,13 +22,11 @@ function Courses() {
     }, [user, navigate]);
 
     useEffect(() => {
-        // Fetch all courses
         fetch('http://localhost:8080/api/courses')
             .then(res => res.json())
             .then(setCourses)
             .catch(console.error);
 
-        // Fetch enrolled courses
         if (user && user.id) {
             fetch(`http://localhost:8080/api/students/user/${user.id}`)
                 .then(res => {
@@ -60,16 +58,13 @@ function Courses() {
                 if (!res.ok) throw new Error("Failed to enroll");
                 setEnrolledCourseIds(prev => [...prev, courseId]);
 
-                // After successful enrollment, re-fetch the user data to get the updated role
                 return fetch(`http://localhost:8080/api/users/${user.id}`);
             })
             .then(res => res.json())
             .then(updatedUser => {
-                // Dispatch the updated user data to Redux
                 dispatch(loginSuccess(updatedUser));
 
-                // Update localStorage with the updated user data
-                localStorage.setItem('user', JSON.stringify(updatedUser)); // Save to localStorage
+                localStorage.setItem('user', JSON.stringify(updatedUser));
             })
             .catch(console.error);
     };

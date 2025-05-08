@@ -6,7 +6,6 @@ function ModuleEditor({ modules = [], setModules, onEdit, onDeleteConfirm }) {
     const user = useSelector(state => state.user);
     const navigate = useNavigate();
 
-    // 🔒 Auth and banned check
     useEffect(() => {
         if (!user) {
             navigate('/login');

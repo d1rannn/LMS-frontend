@@ -24,7 +24,6 @@ function ModuleEditorPage() {
     }, [user, navigate]);
 
     useEffect(() => {
-        // Fetch the module details for editing
         fetch(`http://localhost:8080/api/modules/${moduleId}`)
             .then(res => {
                 if (!res.ok) throw new Error("Module not found");
@@ -41,7 +40,6 @@ function ModuleEditorPage() {
     }, [moduleId]);
 
     const handleSaveModule = () => {
-        // Save the changes to the module
         fetch(`http://localhost:8080/api/modules/${moduleId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -53,7 +51,7 @@ function ModuleEditorPage() {
             .then(res => res.json())
             .then(updatedModule => {
                 setModule(updatedModule);
-                navigate(-1); // Navigate back after saving
+                navigate(-1);
             })
             .catch(err => {
                 setError('Failed to save module');
@@ -86,10 +84,6 @@ function ModuleEditorPage() {
             });
     };
 
-    const handleDeleteModule = () => {
-        // Logic to handle module deletion can go here
-    };
-
     if (loading) return <div className="text-center p-6">Loading module...</div>;
     if (error) return <div className="text-center p-6 text-red-500">{error}</div>;
 
@@ -99,8 +93,6 @@ function ModuleEditorPage() {
             <div className="page-content max-w-4xl mx-auto p-6">
                 <div className="edit-course">
                     <h1 className="text-2xl font-bold mb-4 text-center text-blue-700">Editing Module: {module.title}</h1>
-
-                    {/* Module Title */}
                     <label>Module Title</label>
                     <input
                         type="text"
@@ -109,7 +101,6 @@ function ModuleEditorPage() {
                         className="w-full border border-gray-300 rounded px-4 py-2 mb-4 focus:ring-2 focus:ring-blue-600"
                     />
 
-                    {/* Module Content */}
                     <label>Module Content</label>
                     <textarea
                         rows={6}
@@ -118,7 +109,6 @@ function ModuleEditorPage() {
                         className="w-full border border-gray-300 rounded px-4 py-2 mb-4 focus:ring-2 focus:ring-blue-600"
                     />
 
-                    {/* File Upload */}
                     <label>Upload File (optional)</label>
                     <input
                         type="file"
@@ -143,16 +133,7 @@ function ModuleEditorPage() {
 
                     <div className="text-center">
                         <button
-                            onClick={handleDeleteModule}
-                            className="btn-danger w-full py-2 delete-module-btn"
-                        >
-                            Delete Module
-                        </button>
-                    </div>
-
-                    <div className="text-center">
-                        <button
-                            onClick={() => navigate(-1)} // Navigate back to course or previous page
+                            onClick={() => navigate(-1)}
                             className="btn-primary w-full py-2 back-to-edit-btn-btn"
                         >
                             Back to Edit Course

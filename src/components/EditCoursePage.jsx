@@ -6,7 +6,7 @@ import "../style/style.css";
 
 function EditCoursePage() {
     const { id } = useParams();
-    const navigate = useNavigate(); // Hook for navigation
+    const navigate = useNavigate();
     const user = useSelector(state => state?.user);
 
     const [course, setCourse] = useState(null);
@@ -58,7 +58,6 @@ function EditCoursePage() {
     };
 
     const handleModuleClick = (moduleId) => {
-        // Navigate to the module's edit page
         navigate(`/modules/${moduleId}/edit`);
     };
 
