@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import '../style/profile.css';
 
 function UpdateName() {
     const user = useSelector(state => state.user);
+    const dispatch = useDispatch();
     const [formData, setFormData] = useState({ name: '', avatar: null, avatarUrl: '' });
     const [toast, setToast] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
         if (user) {
-            // Fetch user data to get the avatar URL
             const fetchUserData = async () => {
                 try {
                     const response = await fetch(`http://localhost:8080/api/users/${user.id}`);
@@ -20,7 +20,7 @@ function UpdateName() {
                     if (response.ok) {
                         setFormData({
                             name: responseData.name || '',
-                            avatarUrl: responseData.avatarUrl || '/uploads/avatar/default-avatar.png',
+                            avatarUrl: responseData.avatarUrl || '/uploads/avatars/default-avatar.jpg',
                             avatar: null,
                         });
                     } else {
@@ -35,10 +35,12 @@ function UpdateName() {
     }, [user]);
 
     const handleChange = (e) => {
-        if (e.target.name === 'avatar' && e.target.files.length > 0) {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleAvatarSelect = (e) => {
+        if (e.target.files.length > 0) {
             setFormData({ ...formData, avatar: e.target.files[0] });
-        } else {
-            setFormData({ ...formData, [e.target.name]: e.target.value });
         }
     };
 
@@ -58,21 +60,24 @@ function UpdateName() {
             const response = await fetch(`http://localhost:8080/api/users/update-avatar`, {
                 method: 'PUT',
                 headers: {
-                    'User-Id': user.id,  // Include user ID to identify the user
+                    'User-Id': user.id,
                 },
                 body: formDataToSend,
             });
 
             const responseData = await response.json();
             if (!response.ok) {
-                throw new Error(responseData || 'Failed to upload avatar');
+                throw new Error(responseData.message || 'Failed to upload avatar');
             }
 
-            setFormData({
-                ...formData,
-                avatarUrl: responseData.avatarUrl, // Update avatar URL here
+            setFormData(prev => ({
+                ...prev,
+                avatarUrl: responseData.avatarUrl,
                 name: responseData.name,
-            });
+                avatar: null
+            }));
+
+            dispatch({ type: 'UPDATE_USER', payload: responseData });
 
             setToast({ message: 'Avatar updated successfully!', type: 'success' });
             setTimeout(() => setToast(null), 3000);
@@ -97,13 +102,15 @@ function UpdateName() {
 
             const responseData = await response.json();
             if (!response.ok) {
-                throw new Error(responseData || 'Failed to update name');
+                throw new Error(responseData.message || 'Failed to update name');
             }
 
-            setFormData({
-                name: responseData.name,
-                avatarUrl: responseData.avatarUrl, // Ensure avatar URL is returned in the response
-            });
+            setFormData(prev => ({
+                ...prev,
+                name: responseData.name
+            }));
+
+            dispatch({ type: 'UPDATE_USER', payload: responseData });
 
             setToast({ message: 'Name updated successfully!', type: 'success' });
             setTimeout(() => setToast(null), 3000);
@@ -122,6 +129,7 @@ function UpdateName() {
             <div className="main-content">
                 <div className="contact-us-container">
                     <h1 className="display-4">Update Your Name and Avatar</h1>
+
                     <form className="contact-us-form" onSubmit={handleSubmit}>
                         <label htmlFor="name">Name:</label>
                         <input
@@ -132,28 +140,41 @@ function UpdateName() {
                             onChange={handleChange}
                             required
                         />
-                        <label htmlFor="avatar">Avatar:</label>
-                        <input
-                            type="file"
-                            id="avatar"
-                            name="avatar"
-                            accept="image/*"
-                            onChange={handleChange}
-                        />
                         <button type="submit" className="btn-primary update-name-btn">Update Name</button>
                     </form>
-                    <button className="btn-secondary" onClick={() => navigate(`/profile/${user.id}`)}>Back to Profile</button>
-                    <button onClick={handleAvatarChange} className="btn-primary update-avatar-btn">
-                        Update Avatar
-                    </button>
 
-                    {/* Render the Avatar */}
-                    {formData.avatarUrl && (
-                        <div>
-                            <h2>Current Avatar</h2>
-                            <img src={`http://localhost:8080${formData.avatarUrl}`} alt="Avatar" className="avatar-img" />
+                    <div className="avatar-section">
+                        <h2>Current Avatar</h2>
+                        <div className="avatar-preview">
+                            <img
+                                src={`http://localhost:8080${formData.avatarUrl}`}
+                                alt="Avatar"
+                                className="avatar-img"
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = "/default-avatar.png";
+                                }}
+                            />
                         </div>
-                    )}
+
+                        <div className="avatar-upload">
+                            <label htmlFor="avatar" className="upload-label">Choose New Avatar</label>
+                            <input
+                                type="file"
+                                id="avatar"
+                                name="avatar"
+                                accept="image/*"
+                                onChange={handleAvatarSelect}
+                            />
+                            <button onClick={handleAvatarChange} className="btn-primary update-avatar-btn">
+                                Upload Avatar
+                            </button>
+                        </div>
+                    </div>
+
+                    <button className="btn-secondary" onClick={() => navigate(`/profile/${user.id}`)}>
+                        Back to Profile
+                    </button>
                 </div>
             </div>
         </div>

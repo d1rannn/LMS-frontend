@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
@@ -5,6 +6,28 @@ import '../style/profile.css';
 
 function Profile() {
     const user = useSelector(state => state?.user);
+    const [avatarUrl, setAvatarUrl] = useState('/default-avatar.png');
+
+    useEffect(() => {
+        const fetchAvatar = async () => {
+            if (user && user.id) {
+                try {
+                    const response = await fetch(`http://localhost:8080/api/users/${user.id}`);
+                    const data = await response.json();
+                    if (response.ok && data.avatarUrl) {
+                        setAvatarUrl(`http://localhost:8080${data.avatarUrl}`);
+                    } else {
+                        setAvatarUrl('/default-avatar.png');
+                    }
+                } catch (error) {
+                    console.error("Failed to fetch avatar:", error);
+                    setAvatarUrl('/default-avatar.png');
+                }
+            }
+        };
+
+        fetchAvatar();
+    }, [user]);
 
     if (!user) {
         return (
@@ -18,37 +41,35 @@ function Profile() {
         );
     }
 
-    // Assuming avatar URL is returned as part of the user object in the form of: /uploads/avatar/{filename}
-    const avatarUrl = `http://localhost:8080/uploads/avatars/avatar_${user.id}.jpg` || '/uploads/avatars/default-avatar.jpg';
-    console.log('Avatar URL:', avatarUrl);
-
     return (
         <div className="wrapper">
             <Navbar />
             <div className="main-content">
-                <div className="contact-us-container">
-                    <h1 className="display-4">Your Profile</h1>
-                    <p className="lead">View and manage your account details.</p>
+                <div className="profile-card">
+                    <h1 className="profile-title">Your Profile</h1>
 
-                    <div className="profile-details">
-                        <h3>Account Information</h3>
-
-                        {/* Display Avatar */}
-                        <div className="avatar-container">
+                    <div className="profile-info">
+                        <div className="profile-avatar">
                             <img
-                                src={avatarUrl} // Fetch avatar URL from backend
+                                src={avatarUrl}
                                 alt="Avatar"
-                                className="avatar"
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = "/default-avatar.png";
+                                }}
                             />
                         </div>
 
-                        <p><strong>Email:</strong> {user.email}</p>
-                        <p><strong>Role:</strong> {user.role}</p>
+                        <div className="profile-text">
+                            <h2>{user.name}</h2>
+                            <p><strong>Email:</strong> {user.email}</p>
+                            <p><strong>Role:</strong> {user.role}</p>
+                        </div>
                     </div>
 
-                    <div className="profile-actions">
-                        <Link to={`/profile/${user.id}/update-name`} className="btn-primary update-name-btn">Update Name</Link>
-                        <Link to={`/profile/${user.id}/change-password`} className="btn-primary change-password-btn">Change Password</Link>
+                    <div className="profile-buttons">
+                        <Link to={`/profile/${user.id}/update-name`} className="btn update-btn">Update Name & Avatar</Link>
+                        <Link to={`/profile/${user.id}/change-password`} className="btn password-btn">Change Password</Link>
                     </div>
                 </div>
             </div>
