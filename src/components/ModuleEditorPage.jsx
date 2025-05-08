@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import "../style/style.css";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
+import ConfirmModal from './ConfirmModal';
 
 function ModuleEditorPage() {
     const { moduleId } = useParams();
@@ -10,7 +11,8 @@ function ModuleEditorPage() {
     const [module, setModule] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [file, setFile] = useState(null); // To store the selected file
+    const [file, setFile] = useState(null);
+    const [showSaveModal, setShowSaveModal] = useState(false);
 
     const user = useSelector(state => state.user);
     const navigate = useNavigate();
@@ -39,7 +41,7 @@ function ModuleEditorPage() {
             });
     }, [moduleId]);
 
-    const handleSaveModule = () => {
+    const handleConfirmSave = () => {
         fetch(`http://localhost:8080/api/modules/${moduleId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -51,10 +53,12 @@ function ModuleEditorPage() {
             .then(res => res.json())
             .then(updatedModule => {
                 setModule(updatedModule);
+                setShowSaveModal(false);
                 navigate(-1);
             })
             .catch(err => {
                 setError('Failed to save module');
+                setShowSaveModal(false);
             });
     };
 
@@ -75,7 +79,7 @@ function ModuleEditorPage() {
             method: 'POST',
             body: formData,
         })
-            .then(res => res.json())
+            .then(res => res.text())
             .then(data => {
                 console.log(data);
             })
@@ -93,6 +97,7 @@ function ModuleEditorPage() {
             <div className="page-content max-w-4xl mx-auto p-6">
                 <div className="edit-course">
                     <h1 className="text-2xl font-bold mb-4 text-center text-blue-700">Editing Module: {module.title}</h1>
+
                     <label>Module Title</label>
                     <input
                         type="text"
@@ -124,7 +129,7 @@ function ModuleEditorPage() {
 
                     <div className="text-center">
                         <button
-                            onClick={handleSaveModule}
+                            onClick={() => setShowSaveModal(true)}
                             className="btn-primary w-full py-2 save-module-btn"
                         >
                             Save Module
@@ -141,6 +146,15 @@ function ModuleEditorPage() {
                     </div>
                 </div>
             </div>
+
+            {showSaveModal && (
+                <ConfirmModal
+                    type="save"
+                    module={module}
+                    onConfirm={handleConfirmSave}
+                    onCancel={() => setShowSaveModal(false)}
+                />
+            )}
         </div>
     );
 }

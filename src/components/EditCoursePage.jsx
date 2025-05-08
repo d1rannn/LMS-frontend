@@ -45,7 +45,6 @@ function EditCoursePage() {
     const handleSaveCourse = () => {
         fetch(`http://localhost:8080/api/courses/${id}`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ title, description })
         })
             .then(res => res.ok ? res.json() : Promise.reject("Course update failed"))
