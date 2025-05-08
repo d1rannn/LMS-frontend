@@ -1,31 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import "../style/style.css"; // Import the CSS file
+import "../style/style.css";
 
 function CourseManagement() {
     const [courses, setCourses] = useState([]);
-    const [teachers, setTeachers] = useState([]);  // State to hold teachers
+    const [teachers, setTeachers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [newCourse, setNewCourse] = useState({
         title: '',
         description: '',
-        category: '',
-        teacherId: null,  // This will be updated based on the selected teacher
+        teacherId: '', // use empty string to avoid uncontrolled -> controlled warning
     });
+
     const navigate = useNavigate();
     const user = useSelector(state => state.user);
 
-    // If the user is not an admin, redirect to home page
     useEffect(() => {
         if (!user || user.role !== 'ADMIN') {
-            navigate('/'); // Redirect if not an admin
+            navigate('/');
         }
     }, [user, navigate]);
 
-    // Fetch all courses and teachers
     useEffect(() => {
-        // Fetch courses
         fetch('http://localhost:8080/api/courses')
             .then((res) => res.json())
             .then((data) => {
@@ -37,15 +34,10 @@ function CourseManagement() {
                 setLoading(false);
             });
 
-        // Fetch teachers
-        fetch('http://localhost:8080/api/teachers')  // Assuming you have an endpoint to fetch teachers
+        fetch('http://localhost:8080/api/teachers')
             .then((res) => res.json())
-            .then((data) => {
-                setTeachers(data);
-            })
-            .catch((err) => {
-                console.error('Error fetching teachers:', err);
-            });
+            .then((data) => setTeachers(data))
+            .catch((err) => console.error('Error fetching teachers:', err));
     }, []);
 
     const handleChange = (e) => {
@@ -58,27 +50,35 @@ function CourseManagement() {
     const handleTeacherChange = (e) => {
         setNewCourse({
             ...newCourse,
-            teacherId: e.target.value,  // Update teacherId when the selection changes
+            teacherId: e.target.value,
         });
     };
 
     const handleCreateCourse = (e) => {
         e.preventDefault();
+        const payload = {
+            title: newCourse.title,
+            description: newCourse.description,
+            teacherId: parseInt(newCourse.teacherId), // 👈 именно так
+        };
+
         fetch('http://localhost:8080/api/courses', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(newCourse),
+            body: JSON.stringify(payload),
         })
-            .then((res) => res.json())
+            .then((res) => {
+                if (!res.ok) throw new Error("Failed to create course");
+                return res.json();
+            })
             .then((data) => {
                 setCourses([...courses, data]);
                 setNewCourse({
                     title: '',
                     description: '',
-                    category: '',
-                    teacherId: null,
+                    teacherId: '',
                 });
             })
             .catch((err) => console.error('Error creating course:', err));
@@ -86,8 +86,15 @@ function CourseManagement() {
 
     const handleDeleteCourse = (id) => {
         fetch(`http://localhost:8080/api/courses/${id}`, { method: 'DELETE' })
-            .then(() => {
-                setCourses(courses.filter((course) => course.id !== id));
+            .then((res) => {
+                if (res.ok) {
+                    setCourses(courses.filter((course) => course.id !== id));
+                } else {
+                    res.text().then((errorMsg) => {
+                        console.error('Error deleting course:', errorMsg);
+                        alert(`Error: ${errorMsg}`);
+                    });
+                }
             })
             .catch((err) => console.error('Error deleting course:', err));
     };
@@ -100,7 +107,6 @@ function CourseManagement() {
         <div className="admin-course-manager">
             <h2 className="text-center">Course Management</h2>
 
-            {/* New Course Form */}
             <div className="course-form">
                 <form onSubmit={handleCreateCourse}>
                     <label htmlFor="title">Course Title:</label>
@@ -122,16 +128,6 @@ function CourseManagement() {
                         required
                     ></textarea>
 
-                    <label htmlFor="category">Course Category:</label>
-                    <input
-                        type="text"
-                        id="category"
-                        name="category"
-                        value={newCourse.category}
-                        onChange={handleChange}
-                        required
-                    />
-
                     <label htmlFor="teacherId">Teacher:</label>
                     <select
                         id="teacherId"
@@ -143,7 +139,7 @@ function CourseManagement() {
                         <option value="">Select a teacher</option>
                         {teachers.map((teacher) => (
                             <option key={teacher.id} value={teacher.id}>
-                                {teacher.name} {/* Assuming teacher has a 'name' property */}
+                                {teacher.user ? teacher.user.name : "Unknown Teacher"}
                             </option>
                         ))}
                     </select>
@@ -158,8 +154,7 @@ function CourseManagement() {
                     <div key={course.id} className="course-card">
                         <h3>{course.title}</h3>
                         <p>{course.description}</p>
-                        {/* Check if the teacher exists */}
-                        <p><strong>Teacher:</strong> {course.teacher ? course.teacher.name : "No teacher assigned"}</p>
+                        <p><strong>Teacher:</strong> {course.teacher && course.teacher.user ? course.teacher.user.name : "No teacher assigned"}</p>
                         <div className="button-container">
                             <button className="btn-danger" onClick={() => handleDeleteCourse(course.id)}>Delete</button>
                         </div>

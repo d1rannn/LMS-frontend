@@ -22,6 +22,7 @@ import ChangePassword from "./components/ChangePassword";
 import UserManagement from "./components/UserManagement";
 import BannedPage from "./components/BannedPage";
 import CourseManagement from "./components/CourseManagement";
+import TeacherManagement from "./components/TeacherManagement";
 
 export default function App() {
     return (
@@ -48,6 +49,7 @@ export default function App() {
                     <Route path="/banned"                        element={<BannedPage />} />
                     <Route path="admin/users"           element={<UserManagement />} />
                     <Route path="admin/courses"         element={<CourseManagement />} />
+                    <Route path="/admin/teachers"       element={<TeacherManagement />} />
                 </Routes>
             </BrowserRouter>
         </Provider>

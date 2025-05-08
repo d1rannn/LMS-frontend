@@ -25,8 +25,8 @@ function AdminDashboard() {
                 <h2>Manage Courses</h2>
                 <button className="action-btn" onClick={() => navigate('/admin/courses')}>View Courses</button>
 
-                <h2>Other Admin Actions</h2>
-                <button className="action-btn" onClick={() => navigate('/admin/settings')}>Settings</button>
+                <h2>Manage Teachers</h2>
+                <button className="action-btn" onClick={() => navigate('/admin/teachers')}>Create Teachers</button>
             </div>
         </div>
     );
