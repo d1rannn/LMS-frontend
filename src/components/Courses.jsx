@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'; // Use useDispatch for R
 import Navbar from './Navbar';
 import { loginSuccess } from '../store/actions/authActions'; // Import the loginSuccess action
 import "../style/style.css";
+import {useNavigate} from "react-router-dom";
 
 function Courses() {
     const user = useSelector(state => state?.user);
@@ -10,6 +11,7 @@ function Courses() {
 
     const [courses, setCourses] = useState([]);
     const [enrolledCourseIds, setEnrolledCourseIds] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!user) {
