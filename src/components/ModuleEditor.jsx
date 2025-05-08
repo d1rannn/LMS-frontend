@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function ModuleEditor({ modules = [], setModules, onEdit, onDeleteConfirm }) {
-    const user = useSelector(state => state.user);
+    const user = useSelector(state => state?.user);
     const navigate = useNavigate();
 
     useEffect(() => {
         if (!user) {
             navigate('/login');
-        } else if (user.banned || user.role === 'BANNED') {
+        } else if (user.banned) {
             navigate('/banned');
         }
     }, [user, navigate]);
