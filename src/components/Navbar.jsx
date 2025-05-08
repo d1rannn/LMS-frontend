@@ -53,7 +53,6 @@ function Navbar() {
                         {user.role === "ADMIN" && (
                             <>
                                 {renderLink("/admin", "🛠️", "Admin Panel")}
-                                {renderLink("/admin-course-manager", "📚", "Courses (Admin)")}
                             </>
                         )}
 

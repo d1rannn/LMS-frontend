@@ -17,7 +17,10 @@ function CoursePage() {
     const [progress, setProgress] = useState(0); // Track progress here
 
     useEffect(() => {
-        if (!user || !user.id) return;
+        if (!user || !user.role) {
+            // Handle the case when the user is not yet available or user.role is not available
+            return <div>Loading...</div>;
+        }
 
         // 1. Fetch course
         fetch(`http://localhost:8080/api/courses/${id}`)
@@ -69,7 +72,7 @@ function CoursePage() {
                 <h1 className="text-3xl font-bold text-center mb-2">{course.title}</h1>
                 <p className="text-gray-700 text-center mb-6">{course.description}</p>
 
-                {user.role !== 'TEACHER' && (
+                {user && user.role !== 'TEACHER' && (
                     <ProgressTracker progress={progress} />
                 )}
 

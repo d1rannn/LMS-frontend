@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../store/actions/authActions";
 import "../style/style.css";
+import Navbar from "./Navbar";
 
 function Login() {
     const dispatch = useDispatch();
@@ -44,6 +45,7 @@ function Login() {
 
     return (
         <div className="form-container">
+            <Navbar />
             <h1>Login</h1>
 
             {toast && <div className={`toast ${toast.type}`}>{toast.message}</div>}

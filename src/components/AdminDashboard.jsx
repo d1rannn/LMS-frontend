@@ -1,61 +1,34 @@
+import React from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import "../style/admin-style.css";
+import Navbar from "./Navbar"; // Import the CSS file
 
 function AdminDashboard() {
-    const user = useSelector(state => state.auth.user);
+    const user = useSelector(state => state?.user);
+    const navigate = useNavigate();
 
-    if (!user || user.role !== 'admin') {
-        return <p>Access denied</p>;
+    // Check if user is logged in and has 'ADMIN' role
+    if (!user || user.role !== 'ADMIN') {
+        return <p>Access denied. You must be an administrator to view this page.</p>;
     }
 
     return (
-        <div>
-            <h1>Admin Dashboard</h1>
-        </div>
+        <div className="admin-dashboard">
+            <Navbar />
+            <h1 className="dashboard-title">Admin Dashboard</h1>
+            <p className="welcome-message">Welcome, {user.name}!</p>
+            <div className="admin-actions">
+                <h2>Manage Users</h2>
+                <button className="action-btn" onClick={() => navigate('/admin/users')}>View Users</button>
 
-        // <div className="admin-dashboard">
-        //     <Navbar />
-        //     <h1 className="text-center">Admin Dashboard</h1>
-        //     <div className="student-list">
-        //         {students.map(student => (
-        //             <div key={student.id} className="student-card">
-        //                 <h3>{getUserName(student.userId)}</h3>
-        //                 <p>Enrolled Courses:</p>
-        //                 <ul>
-        //                     {student.enrolledCourseIds.map(courseId => (
-        //                         <li key={courseId}>
-        //                             {getCourseTitle(courseId)}
-        //                             <button
-        //                                 onClick={() => handleRemoveCourse(student.id, courseId)}
-        //                                 className="remove-btn"
-        //                             >
-        //                                 Unsubscribe
-        //                             </button>
-        //                         </li>
-        //                     ))}
-        //                 </ul>
-        //
-        //                 <div>
-        //                     <label>Add Course:</label>
-        //                     <select
-        //                         onChange={(e) =>
-        //                             handleAddCourse(student.id, Number(e.target.value))
-        //                         }
-        //                         defaultValue=""
-        //                     >
-        //                         <option value="" disabled>Select a course</option>
-        //                         {courses
-        //                             .filter(c => !student.enrolledCourseIds.includes(c.id))
-        //                             .map(course => (
-        //                                 <option key={course.id} value={course.id}>
-        //                                     {course.title}
-        //                                 </option>
-        //                             ))}
-        //                     </select>
-        //                 </div>
-        //             </div>
-        //         ))}
-        //     </div>
-        // </div>
+                <h2>Manage Courses</h2>
+                <button className="action-btn" onClick={() => navigate('/admin/courses')}>View Courses</button>
+
+                <h2>Other Admin Actions</h2>
+                <button className="action-btn" onClick={() => navigate('/admin/settings')}>Settings</button>
+            </div>
+        </div>
     );
 }
 

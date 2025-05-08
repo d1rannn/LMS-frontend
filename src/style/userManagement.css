@@ -1,0 +1,64 @@
+/* userManagement.css */
+.user-management {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 1000px;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.management-title {
+    text-align: center;
+    color: #333;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.user-table th,
+.user-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.user-table th {
+    background-color: #007bff;
+    color: white;
+}
+
+.user-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.ban-btn {
+    background-color: #dc3545;
+    color: white;
+    padding: 8px 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.ban-btn:hover {
+    background-color: #c82333;
+}
+
+.ban-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.ban-btn:focus {
+    outline: none;
+}

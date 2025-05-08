@@ -9,7 +9,7 @@ function ModulePage() {
     const navigate = useNavigate();
 
     // Get the user data from the Redux store
-    const user = useSelector(state => state.user);
+    const user = useSelector(state => state?.user);
 
     const [module, setModule] = useState(null);
     const [loading, setLoading] = useState(true);

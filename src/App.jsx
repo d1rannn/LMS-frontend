@@ -12,7 +12,6 @@ import StudentCoursesPage   from "./components/StudentCoursesPage";
 import TeacherCoursesPage   from "./components/TeacherCoursesPage";
 import EditCoursePage       from "./components/EditCoursePage";
 import AdminDashboard       from "./components/AdminDashboard";
-import AdminCourseManager   from "./components/AdminCourseManager";
 import CoursePage from "./components/CoursePage";
 import ModulePage from "./components/ModulePage";
 import ModuleEditorPage from "./components/ModuleEditorPage";
@@ -20,6 +19,9 @@ import ContactUs from "./components/ContactUs";
 import Profile from "./components/Profile";
 import UpdateName from "./components/UpdateName";
 import ChangePassword from "./components/ChangePassword";
+import UserManagement from "./components/UserManagement";
+import BannedPage from "./components/BannedPage";
+import CourseManagement from "./components/CourseManagement";
 
 export default function App() {
     return (
@@ -40,10 +42,12 @@ export default function App() {
                     <Route path="/teacher/courses"      element={<TeacherCoursesPage />} />
                     <Route path="/edit-course/:id"      element={<EditCoursePage />} />
                     <Route path="/admin"                element={<AdminDashboard />} />
-                    <Route path="/admin-course-manager" element={<AdminCourseManager />} />
                     <Route path="/courses/:id"          element={<CoursePage />} />
                     <Route path="/courses/:id/modules/:moduleId" element={<ModulePage />} />
                     <Route path="/modules/:moduleId/edit"        element={<ModuleEditorPage />} />
+                    <Route path="/banned"                        element={<BannedPage />} />
+                    <Route path="admin/users"           element={<UserManagement />} />
+                    <Route path="admin/courses"         element={<CourseManagement />} />
                 </Routes>
             </BrowserRouter>
         </Provider>

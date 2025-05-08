@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { clearLoginFlag } from '../store/actions/authActions';
 import Navbar from './Navbar';
+import { useNavigate } from 'react-router-dom';
 import "../style/style.css";
 
 function Home() {
     const justLoggedIn = useSelector(state => state.justLoggedIn);
     const dispatch = useDispatch();
     const [toast, setToast] = useState(null);
+    const [userStatus, setUserStatus] = useState(null);  // New state for user status (banned or not)
+    const navigate = useNavigate();
 
     // Grab the user directly from Redux state.auth.user
     const user = useSelector(state => state.user);
@@ -18,11 +21,44 @@ function Home() {
             setTimeout(() => setToast(null), 3000);
             dispatch(clearLoginFlag()); // reset after showing
         }
-    }, [justLoggedIn, dispatch]);
+
+        if (user) {
+            // Fetch the user status from backend (to check if banned)
+            fetchUserStatus(user.id);
+        }
+
+    }, [justLoggedIn, dispatch, user]);
+
+    // Function to fetch user status from the backend
+    const fetchUserStatus = (userId) => {
+        fetch(`http://localhost:8080/api/users/${userId}`)
+            .then(res => res.json())
+            .then(data => {
+                // Check if the user is banned from the backend
+                if (data.banned) {
+                    setUserStatus('banned');
+                    setToast({ message: "Oops, it seems you are banned. You don't have access to the platform.", type: "error" });
+                    localStorage.removeItem('user');  // Clear user data from local storage
+
+                    // Redirect to banned page and after some time to login
+                    setTimeout(() => {
+                        navigate('/banned');
+                        setTimeout(() => {
+                            navigate('/login');
+                        }, 3000);  // Redirect to login page after 3 seconds
+                    }, 3000);
+                } else {
+                    setUserStatus('active');
+                }
+            })
+            .catch(err => {
+                console.error('Error fetching user status:', err);
+            });
+    };
 
     return (
         <div className="wrapper">
-            {toast && (
+            {toast && toast.message && (
                 <div className={`toast ${toast.type}`}>
                     {toast.message}
                 </div>
@@ -33,7 +69,11 @@ function Home() {
                 <h1 className="display-4">Welcome to Our Platform</h1>
                 <p className="lead">Your journey to learning starts here.</p>
                 {user ? (
-                    <h4>Hello, {user.name}. You have logged in as {user.role}</h4>
+                    userStatus === 'banned' ? (
+                        <h4>{toast ? toast.message : "You are banned. You can't access the platform."}</h4> // Show the banned message
+                    ) : (
+                        <h4>Hello, {user.name}. You have logged in as {user.role}</h4>
+                    )
                 ) : (
                     <h4>Please log in to see your details.</h4>
                 )}
