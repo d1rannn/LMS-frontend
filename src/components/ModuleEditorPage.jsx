@@ -1,17 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import Navbar from './Navbar';
 import "../style/style.css";
+import {useSelector} from "react-redux";
 
 function ModuleEditorPage() {
     const { moduleId } = useParams();
-    const navigate = useNavigate();
 
     const [module, setModule] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [file, setFile] = useState(null); // To store the selected file
+
+    const user = useSelector(state => state.user);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user) {
+            navigate('/login');
+        } else if (user.banned || user.role === 'BANNED') {
+            navigate('/banned');
+        }
+    }, [user, navigate]);
 
     useEffect(() => {
         // Fetch the module details for editing

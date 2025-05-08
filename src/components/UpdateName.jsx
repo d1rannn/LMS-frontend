@@ -12,6 +12,14 @@ function UpdateName() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        if (!user) {
+            navigate('/login');
+        } else if (user.banned || user.role === 'BANNED') {
+            navigate('/banned');
+        }
+    }, [user, navigate]);
+
+    useEffect(() => {
         if (user) {
             const fetchUserData = async () => {
                 try {

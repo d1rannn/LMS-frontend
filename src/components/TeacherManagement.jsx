@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from "./Navbar";
 import "../style/style.css"; // Ensure this is included!
@@ -13,6 +13,14 @@ function TeacherManagement() {
 
     const [toast, setToast] = useState(null);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user) {
+            navigate('/login');
+        } else if (user.banned || user.role === 'BANNED') {
+            navigate('/banned');
+        }
+    }, [user, navigate]);
 
     const showToast = (message, type = "success") => {
         setToast({ message, type });

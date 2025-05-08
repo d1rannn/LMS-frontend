@@ -1,12 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import Navbar from './Navbar';
 import '../style/profile.css';
 
 function Profile() {
     const user = useSelector(state => state?.user);
     const [avatarUrl, setAvatarUrl] = useState('/default-avatar.png');
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user) {
+            navigate('/login');
+        } else if (user.banned || user.role === 'BANNED') {
+            navigate('/banned');
+        }
+    }, [user, navigate]);
 
     useEffect(() => {
         const fetchAvatar = async () => {

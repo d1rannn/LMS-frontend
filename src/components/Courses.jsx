@@ -12,6 +12,14 @@ function Courses() {
     const [enrolledCourseIds, setEnrolledCourseIds] = useState([]);
 
     useEffect(() => {
+        if (!user) {
+            navigate('/login');
+        } else if (user.banned) {
+            navigate('/banned');
+        }
+    }, [user, navigate]);
+
+    useEffect(() => {
         // Fetch all courses
         fetch('http://localhost:8080/api/courses')
             .then(res => res.json())

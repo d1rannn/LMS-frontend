@@ -17,6 +17,14 @@ function EditCoursePage() {
     const [success, setSuccess] = useState(null);
 
     useEffect(() => {
+        if (!user) {
+            navigate('/login');
+        } else if (user.banned) {
+            navigate('/banned');
+        }
+    }, [user, navigate]);
+
+    useEffect(() => {
         if (user && user.id) {
             fetch(`http://localhost:8080/api/teachers/${user.id}/courses/${id}`)
                 .then(res => res.ok ? res.json() : Promise.reject("Course not found"))

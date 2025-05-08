@@ -17,6 +17,14 @@ function CoursePage() {
     const [progress, setProgress] = useState(0); // Track progress here
 
     useEffect(() => {
+        if (!user) {
+            navigate('/login');
+        } else if (user.banned) {
+            navigate('/banned');
+        }
+    }, [user, navigate]);
+
+    useEffect(() => {
         if (!user || !user.role) {
             // Handle the case when the user is not yet available or user.role is not available
             return <div>Loading...</div>;

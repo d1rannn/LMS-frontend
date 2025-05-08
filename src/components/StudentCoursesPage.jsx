@@ -11,6 +11,14 @@ function StudentCoursesPage() {
     const [myCourses, setMyCourses] = useState([]);
 
     useEffect(() => {
+        if (!user) {
+            navigate('/login');
+        } else if (user.banned || user.role === 'BANNED') {
+            navigate('/banned');
+        }
+    }, [user, navigate]);
+
+    useEffect(() => {
         if (user && user.id) {
             fetch(`http://localhost:8080/api/students/user/${user.id}`)
                 .then(res => {

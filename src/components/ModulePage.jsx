@@ -17,6 +17,14 @@ function ModulePage() {
     const [completed, setCompleted] = useState(false); // Track if module is completed
 
     useEffect(() => {
+        if (!user) {
+            navigate('/login');
+        } else if (user.banned || user.role === 'BANNED') {
+            navigate('/banned');
+        }
+    }, [user, navigate]);
+
+    useEffect(() => {
         if (!moduleId) return;
 
         // 1. Fetch the module details
