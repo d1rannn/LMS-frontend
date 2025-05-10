@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearLoginFlag } from '../store/actions/authActions';
-import Navbar from './Navbar';
+import Navbar from '../common/Navbar';
 import { useNavigate } from 'react-router-dom';
 import "../style/style.css";
 

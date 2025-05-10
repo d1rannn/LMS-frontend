@@ -258,6 +258,16 @@ nav ul li button:hover,
     color: #888;
 }
 
+.edit-course select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #1e3a8a;
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: #f0f9ff;
+}
+
 /* ------------------ Admin Dashboard Styles ------------------ */
 
 .admin-dashboard {

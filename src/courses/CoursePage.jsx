@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
-import Navbar from './Navbar';
-import ProgressTracker from './ProgressTracker';
+import Navbar from '../common/Navbar';
+import ProgressTracker from '../dashboard/ProgressTracker';
 import "../style/style.css";
 
 function CoursePage() {

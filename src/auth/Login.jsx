@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../store/actions/authActions";
 import "../style/style.css";
-import Navbar from "./Navbar";
+import Navbar from "../common/Navbar";
 
 function Login() {
     const dispatch = useDispatch();

@@ -3,25 +3,26 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from './store';
 
-import Navbar               from "./components/Navbar";
-import Register             from "./components/Register";
-import Home                 from "./components/Home";
-import Login                from "./components/Login";
-import Courses              from "./components/Courses";
-import StudentCoursesPage   from "./components/StudentCoursesPage";
-import TeacherCoursesPage   from "./components/TeacherCoursesPage";
-import EditCoursePage       from "./components/EditCoursePage";
-import AdminDashboard       from "./components/AdminDashboard";
-import CoursePage from "./components/CoursePage";
-import ModulePage from "./components/ModulePage";
-import ModuleEditorPage from "./components/ModuleEditorPage";
-import Profile from "./components/Profile";
-import UpdateName from "./components/UpdateName";
-import ChangePassword from "./components/ChangePassword";
-import UserManagement from "./components/UserManagement";
-import BannedPage from "./components/BannedPage";
-import CourseManagement from "./components/CourseManagement";
-import TeacherManagement from "./components/TeacherManagement";
+import Navbar               from "./common/Navbar";
+import Register             from "./auth/Register";
+import Home                 from "./system/Home";
+import Login                from "./auth/Login";
+import Courses              from "./courses/Courses";
+import StudentCoursesPage   from "./courses/StudentCoursesPage";
+import TeacherCoursesPage   from "./courses/TeacherCoursesPage";
+import EditCoursePage       from "./courses/EditCoursePage";
+import AdminDashboard       from "./dashboard/AdminDashboard";
+import CoursePage           from "./courses/CoursePage";
+import ModulePage           from "./modules/ModulePage";
+import ModuleEditorPage     from "./modules/ModuleEditorPage";
+import Profile              from "./user/Profile";
+import UpdateName           from "./user/UpdateName";
+import ChangePassword       from "./auth/ChangePassword";
+import UserManagement       from "./dashboard/UserManagement";
+import BannedPage           from "./system/BannedPage";
+import CourseManagement     from "./dashboard/CourseManagement";
+import TeacherManagement    from "./dashboard/TeacherManagement";
+import AddModulePage        from './modules/AddModulePage';
 
 export default function App() {
     return (
@@ -39,7 +40,7 @@ export default function App() {
                     <Route path="/courses"              element={<Courses />} />
                     <Route path="/student/courses"      element={<StudentCoursesPage />} />
                     <Route path="/teacher/courses"      element={<TeacherCoursesPage />} />
-                    <Route path="/edit-course/:id"      element={<EditCoursePage />} />
+                    <Route path="/courses/:id/edit"      element={<EditCoursePage />} />
                     <Route path="/admin"                element={<AdminDashboard />} />
                     <Route path="/courses/:id"          element={<CoursePage />} />
                     <Route path="/courses/:id/modules/:moduleId" element={<ModulePage />} />
@@ -48,6 +49,7 @@ export default function App() {
                     <Route path="admin/users"           element={<UserManagement />} />
                     <Route path="admin/courses"         element={<CourseManagement />} />
                     <Route path="/admin/teachers"       element={<TeacherManagement />} />
+                    <Route path="/courses/:id/modules/create" element={<AddModulePage />} />
                 </Routes>
             </BrowserRouter>
         </Provider>

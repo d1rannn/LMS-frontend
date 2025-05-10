@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import "../style/admin-style.css";
-import Navbar from "./Navbar";
+import Navbar from "../common/Navbar";
 
 function AdminDashboard() {
     const user = useSelector(state => state?.user);

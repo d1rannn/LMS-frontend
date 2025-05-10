@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import Navbar from './Navbar';
+import Navbar from '../common/Navbar';
 import "../style/style.css";
 
 function TeacherCoursesPage() {
@@ -60,7 +60,7 @@ function TeacherCoursesPage() {
                                 </div>
                                     <button
                                         className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
-                                        onClick={() => navigate(`/edit-course/${course.id}`)}
+                                        onClick={() => navigate(`/courses/${course.id}/edit`)}
                                     >
                                         Edit Course
                                     </button>

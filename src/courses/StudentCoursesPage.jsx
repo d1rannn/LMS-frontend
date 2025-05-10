@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import "../style/style.css";
-import Navbar from "./Navbar";
+import Navbar from "../common/Navbar";
 import {useNavigate} from "react-router-dom";
 
 function StudentCoursesPage() {

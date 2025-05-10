@@ -1,4 +1,4 @@
-function ConfirmModal({ type, module, onConfirm, onCancel }) {
+function ConfirmModalModule({ type, module, onConfirm, onCancel }) {
     if (!module) return null;
 
     return (
@@ -29,4 +29,4 @@ function ConfirmModal({ type, module, onConfirm, onCancel }) {
     );
 }
 
-export default ConfirmModal;
+export default ConfirmModalModule;

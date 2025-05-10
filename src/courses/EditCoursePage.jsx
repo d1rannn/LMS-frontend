@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Navbar from './Navbar';
+import Navbar from '../common/Navbar';
 import "../style/style.css";
+import ConfirmModalCourse from "../common/ConfirmModalCourse";
 
 function EditCoursePage() {
     const { id } = useParams();
@@ -15,6 +16,7 @@ function EditCoursePage() {
     const [modules, setModules] = useState([]);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
+    const [showSaveCourseModal, setShowSaveCourseModal] = useState(false);
 
     useEffect(() => {
         if (!user) {
@@ -23,6 +25,13 @@ function EditCoursePage() {
             navigate('/banned');
         }
     }, [user, navigate]);
+
+    const fetchModules = () => {
+        fetch(`http://localhost:8080/api/courses/${id}/modules`)
+            .then(res => res.json())
+            .then(setModules)
+            .catch(console.error);
+    };
 
     useEffect(() => {
         if (user && user.id) {
@@ -35,16 +44,14 @@ function EditCoursePage() {
                 })
                 .catch(setError);
 
-            fetch(`http://localhost:8080/api/courses/${id}/modules`)
-                .then(res => res.json())
-                .then(setModules)
-                .catch(console.error);
+            fetchModules();
         }
     }, [id, user]);
 
     const handleSaveCourse = () => {
         fetch(`http://localhost:8080/api/courses/${id}`, {
             method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ title, description })
         })
             .then(res => res.ok ? res.json() : Promise.reject("Course update failed"))
@@ -73,13 +80,27 @@ function EditCoursePage() {
                     <label>Description</label>
                     <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={6} />
 
-                    <div className="button-container">
-                        <button onClick={handleSaveCourse}>Save Course</button>
-                        <button onClick={() => navigate(`/courses/${course.id}`)}>Back to Courses Page</button>
+                    <div className="button-container" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                        <button onClick={ () => {
+                            handleSaveCourse();
+                            setShowSaveCourseModal(true);
+                        }}>
+                            Save Course
+                        </button>
+                        <button onClick={() => navigate(`/courses/${id}/modules/create`)}>Add Module</button>
+                        <button onClick={() => {
+                            if (user.role === 'TEACHER') {
+                                navigate(`/courses/${course.id}`);
+                            } else if(user.role === 'ADMIN') {
+                                navigate(`/admin/courses`);
+                            }
+                        }}>
+                            Back to Courses Page
+                        </button>
                     </div>
 
                     <hr className="my-6" />
-                    <h2>Click to Module you want to edit</h2>
+                    <h2>Modules</h2>
 
                     <div className="module-grid">
                         {modules.length === 0 && <p>No modules available.</p>}
@@ -87,7 +108,7 @@ function EditCoursePage() {
                             <div
                                 key={mod.id}
                                 className="module-card"
-                                onClick={() => handleModuleClick(mod.id)} // Navigate to module edit page on click
+                                onClick={() => handleModuleClick(mod.id)}
                             >
                                 <h3 className="text-lg font-semibold mb-1">📘 {mod.title}</h3>
                                 <p className="text-gray-700">{mod.content}</p>
@@ -99,6 +120,14 @@ function EditCoursePage() {
                     {error && <p className="text-red-500 mt-4">{error}</p>}
                 </div>
             </div>
+
+            {showSaveCourseModal && (
+                <ConfirmModalCourse
+                    course={course}
+                    onConfirm={handleSaveCourse}
+                    onCancel={() => setShowSaveCourseModal(false)}
+                />
+            )}
         </div>
     );
 }

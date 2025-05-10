@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {Link, useNavigate} from 'react-router-dom';
-import Navbar from './Navbar';
+import Navbar from '../common/Navbar';
 import '../style/profile.css';
 
 function Profile() {

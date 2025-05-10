@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Navbar from './Navbar';
+import Navbar from '../common/Navbar';
 import { loginSuccess } from '../store/actions/authActions';
 import "../style/style.css";
 import {useNavigate} from "react-router-dom";

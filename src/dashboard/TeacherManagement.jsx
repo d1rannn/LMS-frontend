@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from "./Navbar";
+import Navbar from "../common/Navbar";
 import "../style/style.css";
 import {useSelector} from "react-redux";
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import "../style/userManagement.css";
-import ConfirmModal from './ConfirmModalAdmin';
+import ConfirmModal from '../common/ConfirmModalAdmin';
 
 function UserManagement() {
     const user = useSelector(state => state?.user);

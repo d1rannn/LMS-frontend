@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Navbar from './Navbar';
+import Navbar from '../common/Navbar';
 import "../style/style.css";
 import { useSelector } from "react-redux";
-import ConfirmModal from './ConfirmModal';
+import ConfirmModalModule from '../common/ConfirmModalModule';
 
 function ModuleEditorPage() {
     const { moduleId } = useParams();
@@ -14,7 +14,7 @@ function ModuleEditorPage() {
     const [file, setFile] = useState(null);
     const [showSaveModal, setShowSaveModal] = useState(false);
 
-    const user = useSelector(state => state.user);
+    const user = useSelector(state => state?.user);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -47,7 +47,8 @@ function ModuleEditorPage() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 title: module.title,
-                content: module.content
+                content: module.content,
+                videoUrl: module.videoUrl
             })
         })
             .then(res => res.json())
@@ -114,6 +115,14 @@ function ModuleEditorPage() {
                         className="w-full border border-gray-300 rounded px-4 py-2 mb-4 focus:ring-2 focus:ring-blue-600"
                     />
 
+                    <label>Video URL (optional)</label>
+                    <input
+                        type="text"
+                        value={module.videoUrl || ''}
+                        onChange={(e) => setModule({ ...module, videoUrl: e.target.value })}
+                        className="w-full border border-gray-300 rounded px-4 py-2 mb-4 focus:ring-2 focus:ring-blue-600"
+                    />
+
                     <label>Upload File (optional)</label>
                     <input
                         type="file"
@@ -148,7 +157,7 @@ function ModuleEditorPage() {
             </div>
 
             {showSaveModal && (
-                <ConfirmModal
+                <ConfirmModalModule
                     type="save"
                     module={module}
                     onConfirm={handleConfirmSave}
