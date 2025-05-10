@@ -15,7 +15,7 @@ function UserManagement() {
     useEffect(() => {
         if (!user || user.role !== 'ADMIN') {
             console.log('Access denied: Invalid or non-admin user');
-            navigate("/"); // Or another page such as /access-denied
+            navigate("/");
         }
     }, [user, navigate]);
 
@@ -70,6 +70,28 @@ function UserManagement() {
             });
     };
 
+    const unbanUser = () => {
+        fetch(`http://localhost:8080/api/users/${userToBan.id}/unban`, {
+            method: 'PUT',
+        })
+            .then((res) => {
+                if (!res.ok) throw new Error('Failed to unban user');
+                return res.json();
+            })
+            .then(() => {
+                setUsers((prevUsers) =>
+                    prevUsers.map((u) =>
+                        u.id === userToBan.id ? { ...u, banned: false } : u
+                    )
+                );
+                closeModal();
+            })
+            .catch((err) => {
+                console.error('Error unbanning user:', err);
+                closeModal();
+            });
+    };
+
     if (loading) {
         return <div>Loading users...</div>;
     }
@@ -102,7 +124,15 @@ function UserManagement() {
                         </td>
                         <td>
                             {user.banned ? (
-                                <span className="banned-label">Banned</span>
+                                <button
+                                    className="unban-btn"
+                                    onClick={() => {
+                                        setUserToBan(user);
+                                        setShowModal(true);
+                                    }}
+                                >
+                                    Unban
+                                </button>
                             ) : (
                                 <button
                                     className="ban-btn"
@@ -119,9 +149,9 @@ function UserManagement() {
             </table>
             {showModal && (
                 <ConfirmModal
-                    type="ban"
-                    module={userToBan}
-                    onConfirm={banUser}
+                    type={userToBan?.banned ? "unban" : "ban"}
+                    user={userToBan}
+                    onConfirm={userToBan?.banned ? unbanUser : banUser}
                     onCancel={closeModal}
                 />
             )}

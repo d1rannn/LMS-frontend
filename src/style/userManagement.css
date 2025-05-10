@@ -62,3 +62,23 @@
 .ban-btn:focus {
     outline: none;
 }
+
+.unban-btn {
+    background-color: #6c757d; /* Bootstrap's secondary gray */
+    color: white;
+    padding: 8px 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.unban-btn:hover {
+    background-color: #5a6268;
+}
+
+.unban-btn:focus {
+    outline: none;
+}

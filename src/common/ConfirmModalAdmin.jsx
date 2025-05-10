@@ -1,14 +1,14 @@
-function ConfirmModalAdmin({ type, module, onConfirm, onCancel }) {
-    if (!module) return null;
+function ConfirmModalAdmin({ type, user, onConfirm, onCancel }) {
+    if (!user) return null;
 
     return (
         <div className="modal-overlay">
             <div className="modal-box">
                 <h3 className="text-lg font-semibold mb-2">
-                    {type === 'ban' ? 'Ban User' : 'Save Module'}
+                    {type === 'ban' ? 'Ban User' : 'Unban User'}
                 </h3>
                 <p className="mb-4">
-                    Are you sure you want to ban <strong>{module.name}</strong>?
+                    Are you sure you want to {type} <strong>{user.name}</strong>?
                 </p>
                 <div className="modal-button-group">
                     <button

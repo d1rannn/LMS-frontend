@@ -16,6 +16,7 @@ function CourseManagement() {
 
     const [showDeleteCourseModal, setShowDeleteCourseModal] = useState(false);
     const [courseToDelete, setCourseToDelete] = useState(null);
+    const [showCreateCourseModal, setShowCreateCourseModal] = useState(false);
 
     const navigate = useNavigate();
     const user = useSelector(state => state.user);
@@ -58,8 +59,7 @@ function CourseManagement() {
         });
     };
 
-    const handleCreateCourse = (e) => {
-        e.preventDefault();
+    const confirmCreateCourse = () => {
         const payload = {
             title: newCourse.title,
             description: newCourse.description,
@@ -78,8 +78,17 @@ function CourseManagement() {
             .then(data => {
                 setCourses([...courses, data]);
                 setNewCourse({ title: '', description: '', teacherId: '' });
+                setShowCreateCourseModal(false);
             })
-            .catch(err => console.error('Error creating course:', err));
+            .catch(err => {
+                console.error('Error creating course:', err);
+                setShowCreateCourseModal(false);
+            });
+    };
+
+    const handleCreateCourse = (e) => {
+        e.preventDefault();
+        setShowCreateCourseModal(true);
     };
 
     const confirmDeleteCourse = () => {
@@ -189,6 +198,18 @@ function CourseManagement() {
                     onCancel={() => {
                         setShowDeleteCourseModal(false);
                         setCourseToDelete(null);
+                    }}
+                />
+            )}
+
+            {showCreateCourseModal && (
+                <ConfirmModalCourse
+                    type="create"
+                    course={newCourse}
+                    onConfirm={confirmCreateCourse}
+                    onCancel={() => {
+                        setShowCreateCourseModal(false);
+                        setNewCourse({ title: '', description: '', teacherId: '' });
                     }}
                 />
             )}

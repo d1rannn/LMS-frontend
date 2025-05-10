@@ -5,7 +5,11 @@ function ConfirmModalCourse({ type, course, onConfirm, onCancel }) {
         <div className="modal-overlay">
             <div className="modal-box">
                 <h3 className="text-lg font-semibold mb-2">
-                    {type === 'delete' ? 'Delete Course' : 'Save Course'}
+                    {type === 'delete'
+                        ? 'Delete Course'
+                        : type === 'create'
+                            ? 'Create Course'
+                            : 'Save Course'}
                 </h3>
                 <p className="mb-4">
                     Are you sure you want to {type} <strong>{course.title}</strong>?
