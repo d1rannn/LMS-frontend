@@ -1,23 +1,19 @@
 # New version of repo. Please, just discover, not copy. Thanks ˶ᵔ ᵕ ᵔ˶
 Old version is dead. Because of me. (Hate git in vscode now)
 
-### To-Do: (Daniar)
-1. Finish implementation of authorization and authentification (Done✅)
-   
-2. Roles (User, Student, Teacher)
-   
-   2.1. User - Can Login and Register in Site. Can view catalog of courses. (Done✅)
-   2.2. Student - This is role when user buys a course. Can see more information of course(For now, just see who teaches course). (Done✅)
-   2.3. Teacher - Can Edit Teaching course information(Course title and description). (Done✅)
+### To-Do
 
---------------------
+1. in edit course page, separate modules and course info editing
+2. add course pic (backend endpoint + render on frontend)
+3. on module edit page add delete module feature
+4. fix progress tracking (move it on localstorage or redux storage and fix backend endpoint (when teacher or admin adds new module, on backend side number of all module doesnt changes and it provides wrong percentage render))
 
-### To-Do: (Aibol)
-1. Roles (Admin)
+### Done:
 
-Implement: 
-- Create Courses
-- Delete courses
+1. security of pages
+2. font change
+3. in user and student pages design changes
+
 
 
 
