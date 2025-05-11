@@ -60,18 +60,18 @@ function Navbar() {
 
                         <button onClick={handleLogout} className="nav-link logout-button">
                             <span className="nav-icon">🚪</span>
-                            <span className="nav-label">Выйти</span>
+                            <span className="nav-label">Log out</span>
                         </button>
                     </>
                 ) : (
                     <>
-                        {renderLink("/register", "📝", "Регистрация")}
-                        {renderLink("/login", "🔑", "Войти")}
+                        {renderLink("/register", "📝", "Register")}
+                        {renderLink("/login", "🔑", "Login")}
                     </>
                 )}
 
                 {user && isExpanded && (
-                    <h4 style={{ color: '#333', paddingLeft: '1rem' }}>Роль: {user.role}</h4>
+                    <h4 style={{ color: '#333', paddingLeft: '1rem' }}>Role: {user.role}</h4>
                 )}
             </nav>
         </aside>

@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
 body, html {
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'DM Sans', sans-serif;
     background-color: #f4f6fc;
 }
 
@@ -859,6 +861,7 @@ button {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
 .module-card h1, .module-card h2 {
@@ -899,4 +902,83 @@ button {
 
 .button-container button:hover {
     background-color: #0056b3; /* Optional: change the hover color for buttons */
+}
+
+/* Стили для приветственной карточки */
+.welcome-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center; /* Центрируем текст */
+}
+
+/* Стили для заголовка приветствия */
+.welcome-card h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Стили для подзаголовка приветствия */
+.welcome-card p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+/* Стили для приветственного сообщения для пользователя */
+.welcome-card h4 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-top: 20px;
+}
+
+/* Стили для общей карточки новостей */
+.news-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+/* Контейнер для новостей с горизонтальным скроллом */
+.news-card-container {
+    display: flex;
+    flex-direction: row; /* Располагаем новости в ряд */
+    gap: 20px;
+    overflow-x: auto; /* Горизонтальный скроллинг */
+    padding-bottom: 10px; /* Немного отступа внизу */
+}
+
+/* Стили для каждого элемента новости */
+.news-item {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    min-width: 250px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    flex-shrink: 0; /* Не сжимать элементы */
+}
+
+/* Стили для заголовка новости */
+.news-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Стили для описания новости */
+.news-description {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Эффект при наведении на карточку новости */
+.news-item:hover {
+    transform: translateY(-5px);
 }

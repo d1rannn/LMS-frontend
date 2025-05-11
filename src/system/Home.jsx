@@ -11,8 +11,25 @@ function Home() {
     const [toast, setToast] = useState(null);
     const [userStatus, setUserStatus] = useState(null);
     const navigate = useNavigate();
-
     const user = useSelector(state => state?.user);
+
+    const [news, setNews] = useState([
+        {
+            id: 1,
+            title: "📢 New Course Management Features Launched",
+            description: "Admins can now edit and delete courses with full confirmation support."
+        },
+        {
+            id: 2,
+            title: "🚀 Improved Module Editor",
+            description: "Module editing now supports video links and file uploads."
+        },
+        {
+            id: 3,
+            title: "🎓 Teacher Dashboard Update",
+            description: "Teachers can track module progress and manage course materials more easily."
+        }
+    ]);
 
     useEffect(() => {
         if (justLoggedIn) {
@@ -24,7 +41,6 @@ function Home() {
         if (user) {
             fetchUserStatus(user.id);
         }
-
     }, [justLoggedIn, dispatch, user]);
 
     const fetchUserStatus = (userId) => {
@@ -61,17 +77,36 @@ function Home() {
 
             <Navbar />
             <div className="main-content">
-                <h1 className="display-4">Welcome to Our Platform</h1>
-                <p className="lead">Your journey to learning starts here.</p>
-                {user ? (
-                    userStatus === 'banned' ? (
-                        <h4>{toast ? toast.message : "You are banned. You can't access the platform."}</h4> // Show the banned message
+                {/* Приветственное сообщение в отдельной карточке */}
+                <div className="welcome-card">
+                    <h1 className="display-4">Welcome to Our Platform</h1>
+                    <p className="lead">Your journey to learning starts here.</p>
+
+                    {user ? (
+                        userStatus === 'banned' ? (
+                            <h4>{toast ? toast.message : "You are banned. You can't access the platform."}</h4>
+                        ) : (
+                            <h4>Hello, {user.name}. You have logged in as {user.role}</h4>
+                        )
                     ) : (
-                        <h4>Hello, {user.name}. You have logged in as {user.role}</h4>
-                    )
-                ) : (
-                    <h4>Please log in to see your details.</h4>
-                )}
+                        <h4>Please log in to see your details.</h4>
+                    )}
+                </div>
+
+                {/* Новости в отдельной карточке с горизонтальным скроллингом */}
+                <div className="news-section mt-6">
+                    <h2 className="text-xl font-semibold mb-4">📌 Latest News</h2>
+                    <div className="news-card">
+                        <div className="news-card-container">
+                            {news.map(item => (
+                                <div key={item.id} className="news-item">
+                                    <h3 className="news-title">{item.title}</h3>
+                                    <p className="news-description">{item.description}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );

@@ -72,8 +72,11 @@ function CoursePage() {
         <div className="page-layout">
             <Navbar />
             <div className="page-content max-w-3xl mx-auto p-6">
-                <h1 className="text-3xl font-bold text-center mb-2">{course.title}</h1>
-                <p className="text-gray-700 text-center mb-6">{course.description}</p>
+                <div className="welcome-card">
+                    <h1>Course name: {course.title}</h1>
+                    <h3>Course description: </h3>
+                    <p>{course.description}</p>
+                </div>
 
                 {user && user.role !== 'TEACHER' && (
                     <ProgressTracker progress={progress} />

@@ -1,6 +1,5 @@
 /* Profile page container */
 .wrapper {
-    font-family: 'Arial', sans-serif;
     background-color: #f8f9fa;
     min-height: 100vh;
     padding-top: 20px;
@@ -401,4 +400,41 @@
 
 .password-btn:hover {
     background-color: #0056b3;
+}
+
+/* Стили для контейнера карточек новостей */
+.news-card-container {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    max-height: 500px; /* Ограничиваем высоту для скроллинга */
+    gap: 20px;
+}
+
+/* Стили для каждой карточки новости */
+.news-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Стили для заголовка новости */
+.news-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Стили для описания новости */
+.news-description {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Эффект при наведении на карточку */
+.news-card:hover {
+    transform: translateY(-5px);
 }

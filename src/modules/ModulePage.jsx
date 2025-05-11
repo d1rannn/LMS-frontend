@@ -95,40 +95,48 @@ function ModulePage() {
             <div className="page-content max-w-4xl mx-auto p-4">
                 <div className="module-card shadow-lg rounded-lg p-6 bg-white">
                     <h1 className="text-2xl font-bold mb-3">{module.title}</h1>
+                </div>
 
-                    <div className="mb-4">
+                <div className="module-card shadow-lg rounded-lg p-6 bg-white">
+                    <div className="module-card shadow-lg rounded-lg p-6 bg-white">
+                        <div className="mb-4">
                         <h2 className="text-lg font-semibold mb-2">🎬 Video Lesson</h2>
-                        {module.videoUrl
-                            ? <a
-                                href={module.videoUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-blue-600 underline"
-                            >
-                                Watch Video Lesson
-                            </a>
-                            : <p>No video available for this module.</p>}
+                            {module.videoUrl
+                                ? <a
+                                    href={module.videoUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-600 underline"
+                                >
+                                    Watch Video Lesson
+                                </a>
+                                : <p>No video available for this module.</p>}
+                        </div>
                     </div>
 
-                    <div className="mb-4">
-                        <h2 className="text-lg font-semibold mb-1">📝 Notes</h2>
-                        <p className="text-gray-800 whitespace-pre-line">
-                            {module.content}
-                        </p>
+                    <div className="module-card shadow-lg rounded-lg p-6 bg-white">
+                        <div className="mb-4">
+                            <h2 className="text-lg font-semibold mb-1">📝 Notes</h2>
+                            <p className="text-gray-800 whitespace-pre-line">
+                                {module.content}
+                            </p>
+                        </div>
                     </div>
 
-                    <div className="mb-4">
-                        <h2 className="text-lg font-semibold mb-1">📁 Download File</h2>
-                        {module.filePath
-                            ? <a
-                                href={`http://localhost:8080/api/modules/${moduleIdNum}/file/${module.filePath.split('/').pop()}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-blue-600 underline"
-                            >
-                                Download File
-                            </a>
-                            : <p>No file available for this module.</p>}
+                    <div className="module-card shadow-lg rounded-lg p-6 bg-white">
+                        <div className="mb-4">
+                            <h2 className="text-lg font-semibold mb-1">📁 Download File</h2>
+                            {module.filePath
+                                ? <a
+                                    href={`http://localhost:8080/api/modules/${moduleIdNum}/file/${module.filePath.split('/').pop()}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-600 underline"
+                                >
+                                    Download File
+                                </a>
+                                : <p>No file available for this module.</p>}
+                        </div>
                     </div>
 
                     {user.role !== 'TEACHER' && (

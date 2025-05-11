@@ -43,7 +43,7 @@ function StudentCoursesPage() {
             <Navbar />
             <div className="page-content">
                 <div className="student-courses-page">
-                    <div className="text-center">
+                    <div className="welcome-card">
                         <h1>My Courses</h1>
                     </div>
                     {myCourses.length === 0 ? (

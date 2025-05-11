@@ -91,7 +91,7 @@ function Courses() {
         <div className="page-layout">
             <Navbar />
             <div className="page-content">
-                <div className="text-center">
+                <div className="welcome-card">
                     <h1>Hi, {user?.name}</h1>
                     <h2>Available courses:</h2>
                 </div>
