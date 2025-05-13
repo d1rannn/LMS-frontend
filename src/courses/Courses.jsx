@@ -95,6 +95,7 @@ function Courses() {
                     <h1>Hi, {user?.name}</h1>
                     <h2>Available courses:</h2>
                 </div>
+
                 <div className="course-grid">
                     {courses.map(course => {
                         const isEnrolled = enrolledCourseIds.includes(course.id);
@@ -102,22 +103,25 @@ function Courses() {
                             <div key={course.id} className="course-card">
                                 <h3>{course.title}</h3>
                                 <p>{course.description}</p>
-                                {!isEnrolled ? (
-                                    <button onClick={() => handleEnroll(course.id)}>
-                                        Sign up
-                                    </button>
-                                ) : (
-                                    <>
-                                        <p className="already-enrolled">
-                                            You are already enrolled
-                                        </p>
+
+                                {isEnrolled && (
+                                    <p className="already-enrolled">You are already enrolled</p>
+                                )}
+
+                                <div className="card-button-group">
+                                    {!isEnrolled ? (
+                                        <button onClick={() => handleEnroll(course.id)}>
+                                            Sign up
+                                        </button>
+                                    ) : (
                                         <button
                                             className="unenrolled"
-                                            onClick={() => handleUnsubscribe(course.id)}>
+                                            onClick={() => handleUnsubscribe(course.id)}
+                                        >
                                             Unsubscribe
                                         </button>
-                                    </>
-                                )}
+                                    )}
+                                </div>
                             </div>
                         );
                     })}

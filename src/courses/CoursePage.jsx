@@ -83,7 +83,7 @@ function CoursePage() {
                 )}
 
                 <div className="course-card-container">
-                    <div className="course-card">
+                    <div className="module-card">
                         <h2>📚 Course Modules</h2>
 
                         {modules.length === 0 ? (
@@ -95,7 +95,7 @@ function CoursePage() {
                                         <h3 className="text-lg font-semibold mb-1">📘 {mod.title}</h3>
                                         <p className="text-gray-700 mb-2">{mod.content}</p>
                                         <button
-                                            className="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded text-sm"
+                                            className="view-btn"
                                             onClick={() => navigate(`/courses/${id}/modules/${mod.id}`)}
                                         >
                                             View Module
@@ -106,7 +106,7 @@ function CoursePage() {
                         )}
                         <div className="text-center mt-6">
                             <button
-                                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+                                className="bg-gray-400 hover:bg-gray-400 text-white px-4 py-2 rounded"
                                 onClick={() => {
                                     if (user?.role === 'STUDENT') {
                                         navigate('/student/courses');

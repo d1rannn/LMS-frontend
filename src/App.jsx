@@ -23,6 +23,7 @@ import BannedPage           from "./system/BannedPage";
 import CourseManagement     from "./dashboard/CourseManagement";
 import TeacherManagement    from "./dashboard/TeacherManagement";
 import AddModulePage        from './modules/AddModulePage';
+import EditCourseModules    from "./modules/EditCourseModules";
 
 export default function App() {
     return (
@@ -40,7 +41,7 @@ export default function App() {
                     <Route path="/courses"              element={<Courses />} />
                     <Route path="/student/courses"      element={<StudentCoursesPage />} />
                     <Route path="/teacher/courses"      element={<TeacherCoursesPage />} />
-                    <Route path="/courses/:id/edit"      element={<EditCoursePage />} />
+                    <Route path="/courses/:id/edit"     element={<EditCoursePage />} />
                     <Route path="/admin"                element={<AdminDashboard />} />
                     <Route path="/courses/:id"          element={<CoursePage />} />
                     <Route path="/courses/:id/modules/:moduleId" element={<ModulePage />} />
@@ -50,6 +51,7 @@ export default function App() {
                     <Route path="admin/courses"         element={<CourseManagement />} />
                     <Route path="/admin/teachers"       element={<TeacherManagement />} />
                     <Route path="/courses/:id/modules/create" element={<AddModulePage />} />
+                    <Route path="/courses/:id/modules/edit" element={<EditCourseModules />} />
                 </Routes>
             </BrowserRouter>
         </Provider>

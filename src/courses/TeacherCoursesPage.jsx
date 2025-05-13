@@ -38,7 +38,9 @@ function TeacherCoursesPage() {
         <div className="page-layout">
             <Navbar />
             <div className="page-content">
-                <h1 className="text-2xl font-bold text-center mb-4">My Teaching Courses</h1>
+                <div className="welcome-card">
+                    <h1 className="text-2xl font-bold text-center mb-4">My Teaching Courses</h1>
+                </div>
 
                 {error && <p className="text-red-500 text-center">{error}</p>}
 
@@ -50,20 +52,20 @@ function TeacherCoursesPage() {
                             <div key={course.id} className="course-card">
                                 <h3 className="text-lg font-semibold">{course.title}</h3>
                                 <p className="text-sm text-gray-700">{course.description}</p>
-                                <div className="flex gap-2 mt-2">
+                                <div className="card-button-group">
                                     <button
-                                        className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+                                        className="view-btn"
                                         onClick={() => navigate(`/courses/${course.id}`)}
                                     >
                                         View Course
                                     </button>
-                                </div>
                                     <button
-                                        className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+                                        className="edit-btn"
                                         onClick={() => navigate(`/courses/${course.id}/edit`)}
                                     >
                                         Edit Course
                                     </button>
+                                </div>
 
                             </div>
                         ))}

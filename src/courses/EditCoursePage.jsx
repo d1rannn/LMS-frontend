@@ -75,19 +75,25 @@ function EditCoursePage() {
                     <h1>Edit Course: {course?.title}</h1>
 
                     <label>Course Title</label>
-                    <input value={title} onChange={(e) => setTitle(e.target.value)} />
+                    <input value={title}
+                           onChange={(e) => setTitle(e.target.value)} />
 
                     <label>Description</label>
-                    <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={6} />
+                    <textarea value={description}
+                              onChange={(e) => setDescription(e.target.value)} rows={6} />
 
-                    <div className="button-container" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                    <div className="button-container"
+                         style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                         <button onClick={ () => {
                             handleSaveCourse();
                             setShowSaveCourseModal(true);
                         }}>
                             Save Course
                         </button>
-                        <button onClick={() => navigate(`/courses/${id}/modules/create`)}>Add Module</button>
+                        <button
+                            onClick={() => navigate(`/courses/${id}/modules/edit`)}>
+                            Edit Course Modules
+                        </button>
                         <button onClick={() => {
                             if (user.role === 'TEACHER') {
                                 navigate(`/courses/${course.id}`);
@@ -98,26 +104,6 @@ function EditCoursePage() {
                             Back to Courses Page
                         </button>
                     </div>
-
-                    <hr className="my-6" />
-                    <h2>Modules</h2>
-
-                    <div className="module-grid">
-                        {modules.length === 0 && <p>No modules available.</p>}
-                        {modules.map((mod) => (
-                            <div
-                                key={mod.id}
-                                className="module-card"
-                                onClick={() => handleModuleClick(mod.id)}
-                            >
-                                <h3 className="text-lg font-semibold mb-1">📘 {mod.title}</h3>
-                                <p className="text-gray-700">{mod.content}</p>
-                            </div>
-                        ))}
-                    </div>
-
-                    {success && <p className="text-green-500 mt-4">{success}</p>}
-                    {error && <p className="text-red-500 mt-4">{error}</p>}
                 </div>
             </div>
 
