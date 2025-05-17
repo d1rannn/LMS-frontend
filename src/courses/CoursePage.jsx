@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import Navbar from '../common/Navbar';
 import ProgressTracker from '../dashboard/ProgressTracker';
 import "../style/style.css";
@@ -15,6 +15,18 @@ function CoursePage() {
     const [isEnrolled, setIsEnrolled] = useState(false);
     const [loading, setLoading] = useState(true);
     const [progress, setProgress] = useState(0);
+
+    const location = useLocation();
+    const toast = location.state?.toast;
+
+    const [showToast, setShowToast] = useState(!!location.state?.toast);
+
+    useEffect(() => {
+        if (showToast) {
+            const timeout = setTimeout(() => setShowToast(false), 3000);
+            return () => clearTimeout(timeout);
+        }
+    }, [showToast]);
 
     useEffect(() => {
         if (!user) {
@@ -123,6 +135,17 @@ function CoursePage() {
                     </div>
                 </div>
             </div>
+            {toast && (
+                <div className="toast success">
+                    {toast}
+                </div>
+            )}
+
+            {showToast && (
+                <div className="toast success">
+                    {location.state.toast}
+                </div>
+            )}
         </div>
     );
 }

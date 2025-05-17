@@ -648,21 +648,46 @@ button {
     transition: transform 0.2s ease;
 }
 
+.course-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-height: 350px; /* increase height to fit image + text comfortably */
+    overflow: hidden;  /* hide overflow if any */
+}
+
 /* Course page layout styles */
 .course-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 20px;
     padding: 20px;
 }
 
-.page-content.expanded {
-    margin-left: 220px;
+.course-card img {
+    width: 100%;        /* full width of card */
+    height: 150px;      /* fixed height */
+    object-fit: cover;  /* crop to cover area nicely */
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.course-info p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* show max 3 lines */
+    -webkit-box-orient: vertical;
+    max-height: 4.5em; /* ~3 lines */
 }
 
 .page-content {
     margin-left: 70px;
     transition: margin-left 0.3s ease;
+}
+
+.sidebar.expanded ~ .page-content {
+    margin-left: 220px;
 }
 
 .unenrolled {

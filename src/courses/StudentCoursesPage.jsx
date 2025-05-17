@@ -5,7 +5,7 @@ import Navbar from "../common/Navbar";
 import {useNavigate} from "react-router-dom";
 
 function StudentCoursesPage() {
-    const user = useSelector((state) => state?.user || state?.user);
+    const user = useSelector((state) => state?.user);
 
     const navigate = useNavigate();
     const [myCourses, setMyCourses] = useState([]);
@@ -52,6 +52,17 @@ function StudentCoursesPage() {
                         <div className="course-grid">
                             {myCourses.map((course) => (
                                 <div key={course.id} className="course-card">
+                                    {course.imageUrl && (
+                                        <img
+                                            src={
+                                                course.imageUrl
+                                                    ? `http://localhost:8080${course.imageUrl}`
+                                                    : '/default-course-image.jpg'
+                                            }
+                                            alt={`${course.title} image`}
+                                            className="course-image"
+                                        />
+                                    )}
                                     <h3>{course.title}</h3>
                                     <p>{course.description}</p>
                                     <button onClick={() => navigate(`/courses/${course.id}`)}>

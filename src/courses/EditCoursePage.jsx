@@ -18,6 +18,9 @@ function EditCoursePage() {
     const [success, setSuccess] = useState(null);
     const [showSaveCourseModal, setShowSaveCourseModal] = useState(false);
 
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [uploadError, setUploadError] = useState(null);
+
     useEffect(() => {
         if (!user) {
             navigate('/login');
@@ -49,22 +52,49 @@ function EditCoursePage() {
     }, [id, user]);
 
     const handleSaveCourse = () => {
-        fetch(`http://localhost:8080/api/courses/${id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ title, description })
-        })
-            .then(res => res.ok ? res.json() : Promise.reject("Course update failed"))
-            .then(data => {
-                setCourse(data);
-                setSuccess("Course updated successfully");
-                setTimeout(() => setSuccess(null), 3000);
+        uploadImage().then(imageUrl => {
+            // Include imageUrl in course update if uploaded
+            const body = {
+                title,
+                description,
+            };
+            if (imageUrl) body.imageUrl = imageUrl;
+
+            fetch(`http://localhost:8080/api/courses/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body),
             })
-            .catch(setError);
+                .then(res => (res.ok ? res.json() : Promise.reject("Course update failed")))
+                .then(data => {
+                    setCourse(data);
+                    navigate(`/courses/${id}`, {
+                        state: { toast: "Course updated successfully!" },
+                    });
+                })
+                .catch(setError);
+        });
     };
 
-    const handleModuleClick = (moduleId) => {
-        navigate(`/modules/${moduleId}/edit`);
+    const uploadImage = () => {
+        if (!selectedFile) return Promise.resolve(null);
+
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+
+        return fetch(`http://localhost:8080/api/courses/${id}/upload-image`, {
+            method: 'POST',
+            body: formData,
+        })
+            .then(res => {
+                if (!res.ok) throw new Error("Image upload failed");
+                return res.json(); // assuming it returns { imageUrl: '...' }
+            })
+            .then(data => data.imageUrl)
+            .catch(err => {
+                setUploadError(err.message);
+                return null;
+            });
     };
 
     return (
@@ -81,6 +111,13 @@ function EditCoursePage() {
                     <label>Description</label>
                     <textarea value={description}
                               onChange={(e) => setDescription(e.target.value)} rows={6} />
+
+                    <label>Course Image</label>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => setSelectedFile(e.target.files[0])}
+                    />
 
                     <div className="button-container"
                          style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
