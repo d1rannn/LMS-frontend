@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Navbar from '../common/Navbar';
 import "../style/style.css";
 
@@ -10,12 +10,12 @@ function ModulePage() {
     const moduleIdNum = Number(moduleId);
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
     const user = useSelector(state => state.user);
 
-    const [module, setModule]   = useState(null);
+    const [module, setModule] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError]     = useState(null);
+    const [error, setError] = useState(null);
+    const [completedIds, setCompletedIds] = useState([]);
 
     const fetchProgress = () => {
         fetch(`http://localhost:8080/api/progress/${user.id}/course/${courseIdNum}`, {
@@ -26,13 +26,10 @@ function ModulePage() {
                 return res.json();
             })
             .then(data => {
-                const normalized = (data.completedModules || []).map(Number);
-                dispatch({
-                    type: 'SET_PROGRESS',
-                    payload: { courseId: courseIdNum, completedModules: normalized }
-                });
+                const normalized = (data.completedCourseModules || []).map(Number);
+                setCompletedIds(normalized);
             })
-            .catch(console.error);
+            .catch(err => console.error("Progress fetch error:", err));
     };
 
     useEffect(() => {
@@ -66,17 +63,14 @@ function ModulePage() {
             });
 
         fetchProgress();
-    }, [moduleIdNum, user.id, courseIdNum, dispatch]);
+    }, [moduleIdNum, user.id, courseIdNum]);
 
     const handleCompleteModule = () => {
-        fetch(
-            `http://localhost:8080/api/progress/${user.id}/course/${courseIdNum}`,
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ completedModuleId: moduleIdNum })
-            }
-        )
+        fetch(`http://localhost:8080/api/progress/${user.id}/course/${courseIdNum}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ completedModuleId: moduleIdNum })
+        })
             .then(res => {
                 if (!res.ok) throw new Error("Failed to save completion");
                 return res.json();
@@ -85,8 +79,10 @@ function ModulePage() {
             .catch(err => setError(err.message));
     };
 
+    const isModuleCompleted = completedIds.includes(moduleIdNum);
+
     if (loading) return <div className="text-center p-4">Loading module...</div>;
-    if (error)   return <div className="text-center p-4 text-red-500">{error}</div>;
+    if (error) return <div className="text-center p-4 text-red-500">{error}</div>;
     if (!module) return <div className="text-center p-4 text-red-500">Module not found</div>;
 
     return (
@@ -98,55 +94,59 @@ function ModulePage() {
                 </div>
 
                 <div className="module-card shadow-lg rounded-lg p-6 bg-white">
-                    <div className="module-card shadow-lg rounded-lg p-6 bg-white">
-                        <div className="mb-4">
+                    <div className="mb-4">
                         <h2 className="text-lg font-semibold mb-2">🎬 Video Lesson</h2>
-                            {module.videoUrl
-                                ? <a
-                                    href={module.videoUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-blue-600 underline"
-                                >
-                                    Watch Video Lesson
-                                </a>
-                                : <p>No video available for this module.</p>}
-                        </div>
+                        {module.videoUrl ? (
+                            <a
+                                href={module.videoUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-600 underline"
+                            >
+                                Watch Video Lesson
+                            </a>
+                        ) : (
+                            <p>No video available for this module.</p>
+                        )}
                     </div>
 
-                    <div className="module-card shadow-lg rounded-lg p-6 bg-white">
-                        <div className="mb-4">
-                            <h2 className="text-lg font-semibold mb-1">📝 Notes</h2>
-                            <p className="text-gray-800 whitespace-pre-line">
-                                {module.content}
-                            </p>
-                        </div>
+                    <div className="mb-4">
+                        <h2 className="text-lg font-semibold mb-1">📝 Notes</h2>
+                        <p className="text-gray-800 whitespace-pre-line">
+                            {module.content}
+                        </p>
                     </div>
 
-                    <div className="module-card shadow-lg rounded-lg p-6 bg-white">
-                        <div className="mb-4">
-                            <h2 className="text-lg font-semibold mb-1">📁 Download File</h2>
-                            {module.filePath
-                                ? <a
-                                    href={`http://localhost:8080/api/modules/${moduleIdNum}/file/${module.filePath.split('/').pop()}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-blue-600 underline"
-                                >
-                                    Download File
-                                </a>
-                                : <p>No file available for this module.</p>}
-                        </div>
+                    <div className="mb-4">
+                        <h2 className="text-lg font-semibold mb-1">📁 Download File</h2>
+                        {module.filePath ? (
+                            <a
+                                href={`http://localhost:8080/api/modules/${moduleIdNum}/file/${module.filePath.split('/').pop()}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-600 underline"
+                            >
+                                Download File
+                            </a>
+                        ) : (
+                            <p>No file available for this module.</p>
+                        )}
                     </div>
 
                     {user.role !== 'TEACHER' && (
                         <div className="text-center mt-4">
-                            <button
-                                onClick={handleCompleteModule}
-                                className="px-4 py-2 rounded bg-green-600 hover:bg-green-700 text-white font-semibold transition duration-200"
-                            >
-                                ✔️ Complete Module
-                            </button>
+                            {isModuleCompleted ? (
+                                <p className="text-green-600 font-semibold text-lg">
+                                    ✅ Module Already Completed
+                                </p>
+                            ) : (
+                                <button
+                                    onClick={handleCompleteModule}
+                                    className="px-4 py-2 rounded bg-green-600 hover:bg-green-700 text-white font-semibold transition duration-200"
+                                >
+                                    ✔️ Complete Module
+                                </button>
+                            )}
                         </div>
                     )}
 

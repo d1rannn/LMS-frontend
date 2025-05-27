@@ -15,17 +15,32 @@ function AdminDashboard() {
     return (
         <div className="admin-dashboard">
             <Navbar />
-            <h1 className="dashboard-title">Admin Dashboard</h1>
-            <p className="welcome-message">Welcome, {user.name}!</p>
+            <div className="welcome-card">
+                <h1 className="dashboard-title">Admin Dashboard</h1>
+                <p className="welcome-message">Welcome, {user.name}!</p>
+            </div>
+
             <div className="admin-actions">
-                <h2>Manage Users</h2>
-                <button className="action-btn" onClick={() => navigate('/admin/users')}>View Users</button>
+                <div className="welcome-card">
+                    <h2>Manage Users</h2>
+                    <button className="action-btn"
+                            onClick={() => navigate('/admin/users')}>
+                        View Users</button>
+                </div>
 
-                <h2>Manage Courses</h2>
-                <button className="action-btn" onClick={() => navigate('/admin/courses')}>View Courses</button>
+                <div className="welcome-card">
+                    <h2>Manage Courses</h2>
+                    <button className="action-btn"
+                            onClick={() => navigate('/admin/courses')}>
+                        View Courses</button>
+                </div>
 
-                <h2>Manage Teachers</h2>
-                <button className="action-btn" onClick={() => navigate('/admin/teachers')}>Create Teachers</button>
+                <div className="welcome-card">
+                    <h2>Manage Teachers</h2>
+                    <button className="action-btn"
+                            onClick={() => navigate('/admin/teachers')}>
+                        Create Teachers</button>
+                </div>
             </div>
         </div>
     );

@@ -71,7 +71,7 @@ function EditCourseModules() {
                     <button
                         className="back-to-edit-btn"
                         onClick={() => navigate(`/courses/${id}/edit`)}>
-                        Back to Course Page
+                        Back
                     </button>
                     <button
                         className="view-btn"

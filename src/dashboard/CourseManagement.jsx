@@ -116,7 +116,9 @@ function CourseManagement() {
 
     return (
         <div className="admin-course-manager">
-            <h2 className="text-center">Course Management</h2>
+            <div className="welcome-card">
+                <h1 className="text-center">Course Management</h1>
+            </div>
 
             <div className="edit-course">
                 <h2 className="text-center">Create New Course</h2>
@@ -165,11 +167,20 @@ function CourseManagement() {
             <h3 className="course-section">Existing Courses</h3>
             <div className="course-container">
                 {courses.map((course) => (
-                    <div key={course.id} className="course-card">
-                        <h3>{course.title}</h3>
-                        <p>{course.description}</p>
-                        <p><strong>Teacher:</strong> {course.teacher?.user?.name || "No teacher assigned"}</p>
-                        <div className="button-container">
+                    <div key={course.id} className="admin-course-card">
+                        {course.imageUrl && (
+                            <img
+                                src={`http://localhost:8080${course.imageUrl}`}
+                                alt={`${course.title} image`}
+                                className="admin-course-image"
+                            />
+                        )}
+                        <h3 className="admin-course-title">{course.title}</h3>
+                        <p className="admin-course-description">{course.description}</p>
+                        <p className="admin-course-teacher">
+                            <strong>Teacher:</strong> {course.teacher?.user?.name || "No teacher assigned"}
+                        </p>
+                        <div className="admin-course-buttons">
                             <button
                                 className="btn-primary"
                                 onClick={() => navigate(`/courses/${course.id}/edit`)}

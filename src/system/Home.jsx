@@ -77,7 +77,6 @@ function Home() {
 
             <Navbar />
             <div className="main-content">
-                {/* Приветственное сообщение в отдельной карточке */}
                 <div className="welcome-card">
                     <h1 className="display-4">Welcome to Our Platform</h1>
                     <p className="lead">Your journey to learning starts here.</p>
@@ -93,19 +92,22 @@ function Home() {
                     )}
                 </div>
 
-                {/* Новости в отдельной карточке с горизонтальным скроллингом */}
-                <div className="news-section mt-6">
-                    <h2 className="text-xl font-semibold mb-4">📌 Latest News</h2>
-                    <div className="news-card">
-                        <div className="news-card-container">
-                            {news.map(item => (
-                                <div key={item.id} className="news-item">
-                                    <h3 className="news-title">{item.title}</h3>
-                                    <p className="news-description">{item.description}</p>
+                <div>
+                    {user && (
+                        <div className="news-section mt-6">
+                            <h2 className="text-xl font-semibold mb-4">📌 Latest News</h2>
+                            <div className="news-card">
+                                <div className="news-card-container">
+                                    {news.map(item => (
+                                        <div key={item.id} className="news-item">
+                                            <h3 className="news-title">{item.title}</h3>
+                                            <p className="news-description">{item.description}</p>
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
             </div>
         </div>

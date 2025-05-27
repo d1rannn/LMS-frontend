@@ -50,6 +50,13 @@ function TeacherCoursesPage() {
                     <div className="course-grid">
                         {teachingCourses.map(course => (
                             <div key={course.id} className="course-card">
+                                {course.imageUrl && (
+                                    <img
+                                        src={`http://localhost:8080${course.imageUrl}`}
+                                        alt={`${course.title} image`}
+                                        className="course-image"
+                                    />
+                                )}
                                 <h3 className="text-lg font-semibold">{course.title}</h3>
                                 <p className="text-sm text-gray-700">{course.description}</p>
                                 <div className="card-button-group">
@@ -66,7 +73,6 @@ function TeacherCoursesPage() {
                                         Edit Course
                                     </button>
                                 </div>
-
                             </div>
                         ))}
                     </div>

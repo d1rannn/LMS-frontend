@@ -133,12 +133,12 @@ function EditCoursePage() {
                         </button>
                         <button onClick={() => {
                             if (user.role === 'TEACHER') {
-                                navigate(`/courses/${course.id}`);
+                                navigate(`/teacher/courses`);
                             } else if(user.role === 'ADMIN') {
                                 navigate(`/admin/courses`);
                             }
                         }}>
-                            Back to Courses Page
+                            Back
                         </button>
                     </div>
                 </div>

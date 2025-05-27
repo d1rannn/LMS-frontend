@@ -11,7 +11,7 @@ function ProgressTracker({ progress }) {
                     style={{ width: `${progress}%` }}
                 ></div>
             </div>
-            <p className="text-center text-gray-700">{progress}% Completed</p>
+            <p className="text-center text-gray-700">{progress.toFixed(2)}% Completed</p>
         </div>
     );
 }
